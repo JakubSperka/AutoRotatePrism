@@ -1,7 +1,6 @@
 import tkinter as tk
 from import_data import import_network
 
-
 root = tk.Tk()
 root.title("ARP Control Panel v.1.0.0")
 
@@ -12,5 +11,3 @@ import_button = tk.Button(frame_network_points, text="Import Point Data", comman
 import_button.pack(pady=20)
 
 root.mainloop()
-
-
