@@ -1,6 +1,8 @@
 """
 Function to import data from txt files used as command in tkinter button
 """
+
+#Import modules and libraries
 from tkinter import filedialog
 import pandas as pd
 
