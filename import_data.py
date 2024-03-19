@@ -9,7 +9,7 @@ import pandas as pd
 network_points = pd.DataFrame()
 
 
-def import_network():
+def import_network(tree):
     file_path = filedialog.askopenfilename(title="Select Point Data File", filetypes=[("Text files", "*.txt")])
 
     if file_path:
@@ -23,8 +23,8 @@ def import_network():
             print("Imported Network points:")
             print(network_points)
 
-
-            return network_points
+            for index, row in network_points.iterrows():
+                tree.insert("", "end", values=(row["ID"], row["X"], row["Y"], row["H"], row["Code"]))
 
         except Exception as e:
             print(f"Error reading the file: {e}")
