@@ -15,13 +15,13 @@ def import_network(tree):
     if file_path:
         try:
             global network_points
-            imported_network_points = pd.read_csv(file_path, names=["ID", "X", "Y", "H", "Code"], delimiter=',')
-
-            network_points = pd.concat([imported_network_points, network_points])
-            # Print or use the data as needed
+            network_points = pd.read_csv(file_path, names=["ID", "X", "Y", "H", "Code"], delimiter=',')
 
             print("Imported Network points:")
             print(network_points)
+
+            # Clear previous data in the Treeview
+            tree.delete(*tree.get_children())
 
             for index, row in network_points.iterrows():
                 tree.insert("", "end", values=(row["ID"], row["X"], row["Y"], row["H"], row["Code"]))
