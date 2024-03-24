@@ -17,10 +17,10 @@ tree.pack(pady=10)
 
 # Add columns to the Treeview
 for col in ["ID", "X", "Y", "H", "Code"]:
-    tree.heading(col, text=col)
-    tree.column(col, anchor="center")
+    tree.heading(col, text=col, anchor="w")
+    tree.column(col, anchor="w", width=100)
 
 import_button = tk.Button(frame_network_points, text="Import Point Data", command=lambda: import_network(tree))
-import_button.pack(pady=20)
+import_button.pack(pady=5)
 
 root.mainloop()
