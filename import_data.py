@@ -6,10 +6,12 @@ Function to import data from txt files used as command in tkinter button
 from tkinter import filedialog
 import pandas as pd
 
+# Define dataframes for defining global variables
 network_points = pd.DataFrame()
 
 
 def import_network(tree_name):
+    # Get filepath from opened file explorer dialog
     file_path = filedialog.askopenfilename(title="Select Point Data File", filetypes=[("Text files", "*.txt")])
 
     if file_path:

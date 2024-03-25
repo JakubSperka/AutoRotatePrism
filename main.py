@@ -1,4 +1,6 @@
-# Main
+"""
+Main program for APR Control panel GUI
+"""
 
 # Imported packages
 import tkinter as tk
