@@ -23,7 +23,9 @@ for col in ["ID", "X", "Y", "H", "Code"]:
     network_tree.heading(col, text=col, anchor="w")
     network_tree.column(col, anchor="w", width=100)
 
+# Add button for importing network points
 import_button = tk.Button(frame_network_points, text="Import Point Data", command=lambda: import_network(network_tree))
 import_button.pack(pady=5)
 
+# Initialize mainloop for the root window
 root.mainloop()
