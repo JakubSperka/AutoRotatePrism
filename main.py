@@ -5,7 +5,7 @@ Main program for APR Control panel GUI
 # Imported packages
 import tkinter as tk
 from tkinter import ttk
-from import_data import import_network
+from import_data import import_network, import_arp
 
 # Set root GUI window
 root = tk.Tk()
@@ -40,8 +40,9 @@ for col in ["ID", "X", "Y", "H", "Code"]:
     network_tree.column(col, anchor="w", width=100)
 
 # Add button for importing network points
-import_button = tk.Button(frame_network_points, text="Import Point Data", command=lambda: import_network(network_tree))
-import_button.pack(pady=5)
+import_button_network = tk.Button(frame_network_points, text="Import Point Data",
+                                  command=lambda: import_network(network_tree))
+import_button_network.pack(pady=5)
 
 """
 Commands for Equipment tab
@@ -72,6 +73,11 @@ equipment_tree_scrollbar.config(command=equipment_tree.yview)
 for col in ["ARP_ID", "Auth_token", "Prism_height", "Prism_constant"]:
     equipment_tree.heading(col, text=col, anchor="w")
     equipment_tree.column(col, anchor="w", width=125)
+
+# Add button for importing network points
+import_button_arps = tk.Button(frame_equipment, text="Import Equipment",
+                               command=lambda: import_arp(equipment_tree))
+import_button_arps.pack(pady=5)
 
 # Initialize mainloop for the root window
 root.mainloop()
