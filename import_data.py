@@ -11,6 +11,8 @@ network_points = pd.DataFrame()
 arps = pd.DataFrame()
 
 # Function to import geodetic network points
+
+
 def import_network(tree_name):
     # Get filepath from opened file explorer dialog
     file_path = filedialog.askopenfilename(title="Select Point Data File", filetypes=[("Text files", "*.txt")])
