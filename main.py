@@ -89,7 +89,7 @@ import_button_arps.pack(pady=5)
 
 # Create labelframe for ARP control widgets
 frame_arp_control = tk.LabelFrame(frame_equipment,
-                                  text="ARP Control",padx=10, pady=10)
+                                  text="ARP Control", padx=10, pady=10)
 frame_arp_control.pack()
 
 # Create frame for entry ARP ID widget
