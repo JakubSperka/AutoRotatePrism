@@ -37,9 +37,17 @@ network_tree.pack()
 network_tree_scrollbar.config(command=network_tree.yview)
 
 # Add columns to the Treeview for imported network points
-for col in ["ID", "X", "Y", "H", "Code"]:
-    network_tree.heading(col, text=col, anchor="w")
-    network_tree.column(col, anchor="w", width=100)
+network_tree.heading("ID", text="Point ID", anchor="w")
+network_tree.heading("X", text="X [m]", anchor="w")
+network_tree.heading("Y", text="Y [m]", anchor="w")
+network_tree.heading("H", text="H [m]", anchor="w")
+network_tree.heading("Code", text="Survey code", anchor="w")
+
+network_tree.column("ID", anchor="w", width=100)
+network_tree.column("X", anchor="w", width=100)
+network_tree.column("Y", anchor="w", width=100)
+network_tree.column("H", anchor="w", width=100)
+network_tree.column("Code", anchor="w", width=100)
 
 # Add button for importing network points
 import_button_network = tk.Button(frame_network_points, text="Import Point Data",
@@ -79,14 +87,14 @@ equipment_tree_scrollbar.config(command=equipment_tree.yview)
 
 # Add columns to the Treeview for equipment
 equipment_tree.heading("ARP_ID", text="ARP ID", anchor="w")
-equipment_tree.heading("Auth_token", text="Blynk Authentification token", anchor="w")
-equipment_tree.heading("Prism_height", text="Target height", anchor="w")
-equipment_tree.heading("Prism_constant", text="Prism constant", anchor="w")
+equipment_tree.heading("Auth_token", text="Authentication token", anchor="w")
+equipment_tree.heading("Prism_height", text="Target height [m]", anchor="w")
+equipment_tree.heading("Prism_constant", text="Prism constant [mm]", anchor="w")
 
-equipment_tree.column("ARP_ID", anchor="w", width=75)
-equipment_tree.column("Auth_token", anchor="w", width=225)
-equipment_tree.column("Prism_height", anchor="w", width=100)
-equipment_tree.column("Prism_constant", anchor="w", width=100)
+equipment_tree.column("ARP_ID", anchor="w", width=50)
+equipment_tree.column("Auth_token", anchor="w", width=220)
+equipment_tree.column("Prism_height", anchor="w", width=105)
+equipment_tree.column("Prism_constant", anchor="w", width=125)
 
 # Add button for importing network points
 import_button_arps = tk.Button(frame_equipment, text="Import Equipment",
