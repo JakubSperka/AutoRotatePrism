@@ -92,29 +92,22 @@ frame_arp_control = tk.LabelFrame(frame_equipment,
                                   text="ARP Control", padx=10, pady=10)
 frame_arp_control.pack()
 
-# Create frame for entry ARP ID widget
-frame_entry_arp_id = tk.Frame(frame_arp_control)
-frame_entry_arp_id.pack()
-
 # Create label for ARP ID entry widgets
-label_entry_arp_id = tk.Label(frame_entry_arp_id, text="Selected ARP ID:")
-label_entry_arp_id.pack(side=tk.LEFT)
+label_entry_arp_id = tk.Label(frame_arp_control, text="Selected ARP ID:")
+label_entry_arp_id.grid(row=0, sticky="e")
 
 # Create entry widget for ARP ID
-entry_arp_id = tk.Entry(frame_entry_arp_id, width=25)
-entry_arp_id.pack(side=tk.RIGHT)
+entry_arp_id = tk.Entry(frame_arp_control, width=25)
+entry_arp_id.grid(row=0, column=1)
 
-# Create frame for entry ARP auth token widget
-frame_entry_arp_auth_token = tk.Frame(frame_arp_control)
-frame_entry_arp_auth_token.pack()
 
 # Create label for ARP auth token entry widgets
-label_entry_arp_auth_token = tk.Label(frame_entry_arp_auth_token, text="Selected ARP Auth. Token:")
-label_entry_arp_auth_token.pack(side=tk.LEFT)
+label_entry_arp_auth_token = tk.Label(frame_arp_control, text="Selected ARP Auth. Token:")
+label_entry_arp_auth_token.grid(row=1, sticky="e")
 
 # Create entry widget for ARP auth token
-entry_arp_auth_token = tk.Entry(frame_entry_arp_auth_token, width=25)
-entry_arp_auth_token.pack(side=tk.RIGHT)
+entry_arp_auth_token = tk.Entry(frame_arp_control, width=25)
+entry_arp_auth_token.grid(row=1, column=1)
 
 # Initialize mainloop for the root window
 root.mainloop()
