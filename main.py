@@ -78,9 +78,15 @@ equipment_tree.pack()
 equipment_tree_scrollbar.config(command=equipment_tree.yview)
 
 # Add columns to the Treeview for equipment
-for col in ["ARP_ID", "Auth_token", "Prism_height", "Prism_constant"]:
-    equipment_tree.heading(col, text=col, anchor="w")
-    equipment_tree.column(col, anchor="w", width=125)
+equipment_tree.heading("ARP_ID", text="ARP ID", anchor="w")
+equipment_tree.heading("Auth_token", text="Blynk Authentification token", anchor="w")
+equipment_tree.heading("Prism_height", text="Target height", anchor="w")
+equipment_tree.heading("Prism_constant", text="Prism constant", anchor="w")
+
+equipment_tree.column("ARP_ID", anchor="w", width=75)
+equipment_tree.column("Auth_token", anchor="w", width=225)
+equipment_tree.column("Prism_height", anchor="w", width=100)
+equipment_tree.column("Prism_constant", anchor="w", width=100)
 
 # Add button for importing network points
 import_button_arps = tk.Button(frame_equipment, text="Import Equipment",
