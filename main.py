@@ -6,11 +6,12 @@ Main program for APR Control panel GUI
 import tkinter as tk
 from tkinter import ttk
 from import_data import import_network, import_arp
-from select_item import select_item
+from select_item import select_point
 
 # Set root GUI window
 root = tk.Tk()
 root.title("ARP Control Panel v.1.0.0")
+root.iconbitmap("compass.ico")
 
 """
 Commands for Network points tab
@@ -29,7 +30,7 @@ network_tree_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 # Create a Treeview widget for imported network points
 network_tree = ttk.Treeview(treeview_frame_network_points, columns=["ID", "X", "Y", "H", "Code"],
-                            show="headings", selectmode="browse", yscrollcommand=network_tree_scrollbar.set)
+                            show="headings", selectmode="browse", yscrollcommand=network_tree_scrollbar.set, height=5)
 network_tree.pack()
 
 # Config scrollbar for network points Treeview
@@ -40,8 +41,6 @@ for col in ["ID", "X", "Y", "H", "Code"]:
     network_tree.heading(col, text=col, anchor="w")
     network_tree.column(col, anchor="w", width=100)
 
-network_tree.bind('<ButtonRelease-1>', select_item(network_tree))
-
 # Add button for importing network points
 import_button_network = tk.Button(frame_network_points, text="Import Point Data",
                                   command=lambda: import_network(network_tree))
@@ -49,7 +48,7 @@ import_button_network.pack(pady=5)
 
 # Add button for selecting values in network points Treeview
 select_button_network = tk.Button(frame_network_points, text="Select Point",
-                                  command=lambda: select_item(network_tree))
+                                  command=lambda: select_point(network_tree))
 select_button_network.pack(pady=5)
 
 """
@@ -71,7 +70,8 @@ equipment_tree_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 # Create a Treeview widget for equipment
 equipment_tree = ttk.Treeview(treeview_frame_equipment,
                               columns=["ARP_ID", "Auth_token", "Prism_height", "Prism_constant"],
-                              show="headings", selectmode="browse", yscrollcommand=equipment_tree_scrollbar.set)
+                              show="headings", selectmode="browse",
+                              yscrollcommand=equipment_tree_scrollbar.set, height=5)
 equipment_tree.pack()
 
 # Config scrollbar for equipment Treeview

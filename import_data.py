@@ -40,7 +40,7 @@ def import_network(tree_name):
 
     # Error message when no file is selected
     else:
-        print("No file selected.")
+        print("Error: No file selected.")
 
 
 def import_arp(tree_name):
