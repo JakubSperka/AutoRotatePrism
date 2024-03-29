@@ -6,7 +6,7 @@ Main program for APR Control panel GUI
 import tkinter as tk
 from tkinter import ttk
 from import_data import import_network, import_arp
-from select_item import select_point
+from select_item import select_point, select_arp
 
 # Set root GUI window
 root = tk.Tk()
@@ -87,27 +87,77 @@ import_button_arps = tk.Button(frame_equipment, text="Import Equipment",
                                command=lambda: import_arp(equipment_tree))
 import_button_arps.pack(pady=5)
 
+"""
+Commands for ARP Status tab
+"""
+
 # Create labelframe for ARP control widgets
 frame_arp_control = tk.LabelFrame(frame_equipment,
-                                  text="ARP Control", padx=10, pady=10)
+                                  text="ARP Status", padx=10, pady=10)
 frame_arp_control.pack()
 
 # Create label for ARP ID entry widgets
-label_entry_arp_id = tk.Label(frame_arp_control, text="Selected ARP ID:")
-label_entry_arp_id.grid(row=0, sticky="e")
+label_entry_arp_id = tk.Label(frame_arp_control, text="ARP ID:")
+label_entry_arp_id.grid(row=0, column=0, sticky="e")
 
 # Create entry widget for ARP ID
 entry_arp_id = tk.Entry(frame_arp_control, width=25)
 entry_arp_id.grid(row=0, column=1)
 
-
 # Create label for ARP auth token entry widgets
-label_entry_arp_auth_token = tk.Label(frame_arp_control, text="Selected ARP Auth. Token:")
-label_entry_arp_auth_token.grid(row=1, sticky="e")
+label_entry_arp_auth_token = tk.Label(frame_arp_control, text="Auth. Token:")
+label_entry_arp_auth_token.grid(row=1, column=0, sticky="e")
 
 # Create entry widget for ARP auth token
 entry_arp_auth_token = tk.Entry(frame_arp_control, width=25)
 entry_arp_auth_token.grid(row=1, column=1)
+
+# Create label for ARP Status entry widgets
+label_entry_arp_status = tk.Label(frame_arp_control, text="Status:")
+label_entry_arp_status.grid(row=2, column=0, sticky="e")
+
+# Create entry widget for ARP Status
+entry_arp_status = tk.Entry(frame_arp_control, width=25)
+entry_arp_status.grid(row=2, column=1)
+
+"""
+Commands for ARP Rotation tab
+"""
+
+# Create labelframe for ARP control widgets
+frame_arp_rotation = tk.LabelFrame(frame_equipment,
+                                   text="ARP Rotation", padx=10, pady=10)
+frame_arp_rotation.pack()
+
+# Create label for ARP Base point
+label_entry_arp_base = tk.Label(frame_arp_rotation, text="Base point:")
+label_entry_arp_base.grid(row=0, column=0, sticky="e")
+
+# Create entry widget for ARP Base point
+entry_arp_base = tk.Entry(frame_arp_rotation, width=25)
+entry_arp_base.grid(row=0, column=1)
+
+# Create label for ARP Orientation point
+label_entry_arp_orientation = tk.Label(frame_arp_rotation, text="Orientation point:")
+label_entry_arp_orientation.grid(row=1, sticky="e")
+
+# Create entry widget for ARP Orientation point
+entry_arp_orientation = tk.Entry(frame_arp_rotation, width=25)
+entry_arp_orientation.grid(row=1, column=1)
+
+# Create label for ARP Rotation point
+label_entry_arp_rotation = tk.Label(frame_arp_rotation, text="Rotation point:")
+label_entry_arp_rotation.grid(row=2, sticky="e")
+
+# Create entry widget for ARP Rotation point
+entry_arp_rotation = tk.Entry(frame_arp_rotation, width=25)
+entry_arp_rotation.grid(row=2, column=1)
+
+# Add button for selecting values in ARP parameters Treeview
+select_button_arp = tk.Button(frame_equipment, text="Select ARP",
+                              command=lambda: select_arp(equipment_tree))
+select_button_arp.pack(pady=5)
+
 
 # Initialize mainloop for the root window
 root.mainloop()
