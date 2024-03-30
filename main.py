@@ -4,6 +4,7 @@ Main program for APR Control panel GUI
 
 # Imported packages
 import tkinter as tk
+import tkintermapview as tkmap
 from tkinter import ttk
 from import_data import import_network, import_arp
 from select_item import select_point, select_arp
@@ -14,11 +15,24 @@ root.title("ARP Control Panel v.1.0.0")
 root.iconbitmap("compass.ico")
 
 """
+Commands for Map view tab
+"""
+frame_map_view = tk.LabelFrame(root, text="Map view", padx=10, pady=10)
+frame_map_view.grid(row=0, column=0)
+
+map_view = tkmap.TkinterMapView(frame_map_view, width=510, height=510, corner_radius=0)
+map_view.set_position(48.735174, 19.149735)
+map_view.set_zoom(15)
+map_view.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=50)
+map_view.pack()
+
+
+"""
 Commands for Network points tab
 """
 # Create a frame for imported network points
 frame_network_points = tk.LabelFrame(root, text="Imported network points", padx=10, pady=10)
-frame_network_points.pack()
+frame_network_points.grid(row=0, column=1)
 
 # Create a frame for network points Treeview
 treeview_frame_network_points = tk.Frame(frame_network_points)
@@ -65,7 +79,7 @@ Commands for Equipment tab
 
 # Create a frame for equipment tab
 frame_equipment = tk.LabelFrame(root, text="Equipment", padx=10, pady=10)
-frame_equipment.pack()
+frame_equipment.grid(row=1, column=1)
 
 # Create a frame for equipment Treeview
 treeview_frame_equipment = tk.Frame(frame_equipment)
