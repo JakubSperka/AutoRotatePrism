@@ -5,6 +5,7 @@ selected_arp = pd.DataFrame()
 selected_arp_id = pd.DataFrame()
 selected_base = pd.DataFrame()
 selected_orientation = pd.DataFrame()
+selected_rotation = pd.DataFrame()
 
 
 def select_point(tree_name):
@@ -60,3 +61,16 @@ def select_orientation(tree_name):
 
         print("Selected ARP Orientation point:")
         print(selected_orientation)
+
+
+def select_rotation(tree_name):
+    current_rotation = tree_name.item(tree_name.focus())['values']
+
+    if not current_rotation:
+        print("Error: No points Network Points imported/selected.")
+    else:
+        global selected_rotation
+        selected_rotation = pd.DataFrame([current_rotation], columns=["ID", "X", "Y", "H", "Code"])
+
+        print("Selected ARP Rotation point:")
+        print(selected_rotation)

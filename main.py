@@ -6,7 +6,7 @@ Main program for APR Control panel GUI
 import tkinter as tk
 import tkintermapview as tkmap
 from tkinter import ttk
-from import_data import import_network, import_arp
+from import_data import *
 from select_item import *
 
 # Set root GUI window
@@ -18,7 +18,7 @@ root.iconbitmap("compass.ico")
 Commands for Map view tab
 """
 frame_map_view = tk.LabelFrame(root, text="Map view", padx=10, pady=10)
-frame_map_view.grid(row=0, column=0)
+frame_map_view.grid(row=0, column=0, rowspan=2)
 
 map_view = tkmap.TkinterMapView(frame_map_view, width=510, height=510, corner_radius=0)
 map_view.set_position(48.735174, 19.149735)
@@ -74,12 +74,58 @@ select_button_network = tk.Button(frame_network_points, text="Select Point",
 select_button_network.pack(pady=5)
 
 """
+Commands for Temp points tab
+"""
+# Create a frame for imported temp points
+frame_temp_points = tk.LabelFrame(root, text="Imported temporary points", padx=10, pady=10)
+frame_temp_points.grid(row=1, column=1)
+
+# Create a frame for temp points Treeview
+treeview_frame_temp_points = tk.Frame(frame_temp_points)
+treeview_frame_temp_points.pack()
+
+# Create a scrollbar for network points Treeview
+temp_tree_scrollbar = tk.Scrollbar(treeview_frame_temp_points)
+temp_tree_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+# Create a Treeview widget for imported network points
+temp_tree = ttk.Treeview(treeview_frame_temp_points, columns=["ID", "X", "Y", "H", "Code"],
+                         show="headings", selectmode="browse", yscrollcommand=temp_tree_scrollbar.set, height=5)
+temp_tree.pack()
+
+# Config scrollbar for network points Treeview
+temp_tree_scrollbar.config(command=temp_tree.yview)
+
+# Add columns to the Treeview for imported network points
+temp_tree.heading("ID", text="Point ID", anchor="w")
+temp_tree.heading("X", text="X [m]", anchor="w")
+temp_tree.heading("Y", text="Y [m]", anchor="w")
+temp_tree.heading("H", text="H [m]", anchor="w")
+temp_tree.heading("Code", text="Survey code", anchor="w")
+
+temp_tree.column("ID", anchor="w", width=100)
+temp_tree.column("X", anchor="w", width=100)
+temp_tree.column("Y", anchor="w", width=100)
+temp_tree.column("H", anchor="w", width=100)
+temp_tree.column("Code", anchor="w", width=100)
+
+# Add button for importing network points
+import_button_temp = tk.Button(frame_temp_points, text="Import Point Data",
+                               command=lambda: import_temp(temp_tree))
+import_button_temp.pack(pady=5)
+
+# Add button for selecting values in network points Treeview
+select_button_temp = tk.Button(frame_temp_points, text="Select Point",
+                               command=lambda: select_point(temp_tree))
+select_button_temp.pack(pady=5)
+
+"""
 Commands for Equipment tab
 """
 
 # Create a frame for equipment tab
 frame_equipment = tk.LabelFrame(root, text="Equipment", padx=10, pady=10)
-frame_equipment.grid(row=1, column=1)
+frame_equipment.grid(row=2, column=1)
 
 # Create a frame for equipment Treeview
 treeview_frame_equipment = tk.Frame(frame_equipment)
@@ -195,10 +241,15 @@ select_button_base = tk.Button(frame_arp_buttons, text="Select Base point",
                                command=lambda: select_base(network_tree))
 select_button_base.grid(row=0, column=1, pady=5, padx=5)
 
-# Add button for selecting Base point in Network points Treeview
+# Add button for selecting orientation point in Network points Treeview
 select_button_orientation = tk.Button(frame_arp_buttons, text="Select Orientation point",
                                       command=lambda: select_orientation(network_tree))
 select_button_orientation.grid(row=0, column=2, pady=5, padx=5)
+
+# Add button for selecting rotation point in temp points Treeview
+select_button_rotation = tk.Button(frame_arp_buttons, text="Select Rotation point",
+                                   command=lambda: select_rotation(temp_tree))
+select_button_rotation.grid(row=0, column=3, pady=5, padx=5)
 
 
 # Initialize mainloop for the root window
