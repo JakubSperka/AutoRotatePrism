@@ -7,7 +7,7 @@ import tkinter as tk
 import tkintermapview as tkmap
 from tkinter import ttk
 from import_data import import_network, import_arp
-from select_item import select_point, select_arp
+from select_item import *
 
 # Set root GUI window
 root = tk.Tk()
@@ -181,10 +181,24 @@ label_entry_arp_rotation.grid(row=2, sticky="e")
 entry_arp_rotation = tk.Entry(frame_arp_rotation, width=25)
 entry_arp_rotation.grid(row=2, column=1)
 
+# Frame for ARP control buttons
+frame_arp_buttons = tk.Frame(frame_equipment)
+frame_arp_buttons.pack()
+
 # Add button for selecting values in ARP parameters Treeview
-select_button_arp = tk.Button(frame_equipment, text="Select ARP",
+select_button_arp = tk.Button(frame_arp_buttons, text="Select ARP",
                               command=lambda: select_arp(equipment_tree))
-select_button_arp.pack(pady=5)
+select_button_arp.grid(row=0, column=0, pady=5, padx=5)
+
+# Add button for selecting Base point in Network points Treeview
+select_button_base = tk.Button(frame_arp_buttons, text="Select Base point",
+                               command=lambda: select_base(network_tree))
+select_button_base.grid(row=0, column=1, pady=5, padx=5)
+
+# Add button for selecting Base point in Network points Treeview
+select_button_orientation = tk.Button(frame_arp_buttons, text="Select Orientation point",
+                                      command=lambda: select_orientation(network_tree))
+select_button_orientation.grid(row=0, column=2, pady=5, padx=5)
 
 
 # Initialize mainloop for the root window
