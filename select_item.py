@@ -1,4 +1,5 @@
 import pandas as pd
+import tkinter as tk
 
 selected_point = pd.DataFrame()
 selected_arp = pd.DataFrame()
@@ -21,7 +22,7 @@ def select_point(tree_name):
         print(selected_point)
 
 
-def select_arp(tree_name):
+def select_arp(tree_name, entry_field):
     current_arp = tree_name.item(tree_name.focus())['values']
 
     if not current_arp:
@@ -31,10 +32,14 @@ def select_arp(tree_name):
         selected_arp = pd.DataFrame([current_arp], columns=["ARP_ID", "Auth_token", "Prism_height", "Prism_constant"])
 
         global selected_arp_id
-        selected_arp_id = selected_arp["ARP_ID"].astype('string')
+        selected_arp_id = selected_arp["ARP_ID"].astype('string').iloc[0]
 
         print("Selected ARP:")
-        print(selected_arp)
+        print(selected_arp_id)
+
+        # Insert selected_arp_id into the entry field
+        entry_field.delete(0, tk.END)  # Clear the entry field
+        entry_field.insert(0, selected_arp_id)  # Insert selected_arp_id
 
 
 def select_base(tree_name):

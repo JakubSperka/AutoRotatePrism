@@ -6,6 +6,8 @@ Main program for APR Control panel GUI
 import tkinter as tk
 import tkintermapview as tkmap
 from tkinter import ttk
+
+import select_item
 from import_data import *
 from select_item import *
 
@@ -179,6 +181,7 @@ label_entry_arp_id.grid(row=0, column=0, sticky="e")
 entry_arp_id = tk.Entry(frame_arp_control, width=25)
 entry_arp_id.grid(row=0, column=1)
 
+
 # Create label for ARP auth token entry widgets
 label_entry_arp_auth_token = tk.Label(frame_arp_control, text="Auth. Token:")
 label_entry_arp_auth_token.grid(row=1, column=0, sticky="e")
@@ -234,7 +237,7 @@ frame_arp_buttons.pack()
 
 # Add button for selecting values in ARP parameters Treeview
 select_button_arp = tk.Button(frame_arp_buttons, text="Select ARP",
-                              command=lambda: select_arp(equipment_tree))
+                              command=lambda: select_arp(equipment_tree, entry_arp_id))
 select_button_arp.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for selecting Base point in Network points Treeview
