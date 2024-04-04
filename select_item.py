@@ -1,12 +1,21 @@
+"""
+Functions to select data from treeview widget used as command in tkinter button
+"""
+
+# Import modules and libraries
 import pandas as pd
 import tkinter as tk
+from check_connection import *
 
+# Define variables as dataframes for defining global variables later in code
 selected_point = pd.DataFrame()
 selected_arp = pd.DataFrame()
 selected_arp_id = pd.DataFrame()
 selected_base = pd.DataFrame()
+selected_base_id = pd.DataFrame()
 selected_orientation = pd.DataFrame()
 selected_rotation = pd.DataFrame()
+selected_arp_token = pd.DataFrame()
 
 
 def select_point(tree_name):
@@ -22,7 +31,7 @@ def select_point(tree_name):
         print(selected_point)
 
 
-def select_arp(tree_name, entry_field):
+def select_arp(tree_name, entry_field_id, entry_field_token, entry_arp_status):
     current_arp = tree_name.item(tree_name.focus())['values']
 
     if not current_arp:
@@ -34,15 +43,29 @@ def select_arp(tree_name, entry_field):
         global selected_arp_id
         selected_arp_id = selected_arp["ARP_ID"].astype('string').iloc[0]
 
+        global selected_arp_token
+        selected_arp_token = selected_arp["Auth_token"].astype('string').iloc[0]
+
         print("Selected ARP:")
         print(selected_arp_id)
+        print(selected_arp_token)
+
+        check_connection(selected_arp_token, entry_arp_status)
 
         # Insert selected_arp_id into the entry field
-        entry_field.delete(0, tk.END)  # Clear the entry field
-        entry_field.insert(0, selected_arp_id)  # Insert selected_arp_id
+        entry_field_id.config(state="normal")
+        entry_field_id.delete(0, tk.END)  # Clear the entry field
+        entry_field_id.insert(0, selected_arp_id)  # Insert selected_arp_id
+        entry_field_id.config(state="readonly")
+
+        # Insert selected_arp_token into the entry field
+        entry_field_token.config(state="normal")
+        entry_field_token.delete(0, tk.END)  # Clear the entry field
+        entry_field_token.insert(0, selected_arp_token)  # Insert selected_arp_auth_token
+        entry_field_token.config(state="readonly")
 
 
-def select_base(tree_name):
+def select_base(tree_name, entry_field):
     current_base = tree_name.item(tree_name.focus())['values']
 
     if not current_base:
@@ -51,8 +74,15 @@ def select_base(tree_name):
         global selected_base
         selected_base = pd.DataFrame([current_base], columns=["ID", "X", "Y", "H", "Code"])
 
+        global selected_base_id
+        selected_base_id = selected_base["ID"].astype('string').iloc[0]
+
         print("Selected ARP Base point:")
         print(selected_base)
+
+        # Insert selected_arp_id into the entry field
+        entry_field.delete(0, tk.END)  # Clear the entry field
+        entry_field.insert(0, selected_base_id)  # Insert selected_arp_id
 
 
 def select_orientation(tree_name):

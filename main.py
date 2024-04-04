@@ -3,13 +3,12 @@ Main program for APR Control panel GUI
 """
 
 # Imported packages
-import tkinter as tk
 import tkintermapview as tkmap
+import tkinter as tk
 from tkinter import ttk
-
-import select_item
 from import_data import *
 from select_item import *
+from check_connection import *
 
 # Set root GUI window
 root = tk.Tk()
@@ -155,9 +154,9 @@ equipment_tree.heading("Prism_height", text="Target height [m]", anchor="w")
 equipment_tree.heading("Prism_constant", text="Prism constant [mm]", anchor="w")
 
 equipment_tree.column("ARP_ID", anchor="w", width=50)
-equipment_tree.column("Auth_token", anchor="w", width=220)
-equipment_tree.column("Prism_height", anchor="w", width=105)
-equipment_tree.column("Prism_constant", anchor="w", width=125)
+equipment_tree.column("Auth_token", anchor="w", width=230)
+equipment_tree.column("Prism_height", anchor="w", width=100)
+equipment_tree.column("Prism_constant", anchor="w", width=120)
 
 # Add button for importing network points
 import_button_arps = tk.Button(frame_equipment, text="Import Equipment",
@@ -178,25 +177,24 @@ label_entry_arp_id = tk.Label(frame_arp_control, text="ARP ID:")
 label_entry_arp_id.grid(row=0, column=0, sticky="e")
 
 # Create entry widget for ARP ID
-entry_arp_id = tk.Entry(frame_arp_control, width=25)
-entry_arp_id.grid(row=0, column=1)
-
+entry_arp_id = tk.Entry(frame_arp_control, width=15)
+entry_arp_id.grid(row=0, column=1, sticky="w")
 
 # Create label for ARP auth token entry widgets
 label_entry_arp_auth_token = tk.Label(frame_arp_control, text="Auth. Token:")
 label_entry_arp_auth_token.grid(row=1, column=0, sticky="e")
 
 # Create entry widget for ARP auth token
-entry_arp_auth_token = tk.Entry(frame_arp_control, width=25)
-entry_arp_auth_token.grid(row=1, column=1)
+entry_arp_auth_token = tk.Entry(frame_arp_control, width=40)
+entry_arp_auth_token.grid(row=1, column=1, sticky="w")
 
 # Create label for ARP Status entry widgets
 label_entry_arp_status = tk.Label(frame_arp_control, text="Status:")
 label_entry_arp_status.grid(row=2, column=0, sticky="e")
 
 # Create entry widget for ARP Status
-entry_arp_status = tk.Entry(frame_arp_control, width=25)
-entry_arp_status.grid(row=2, column=1)
+entry_arp_status = tk.Entry(frame_arp_control, width=40)
+entry_arp_status.grid(row=2, column=1, sticky="w")
 
 """
 Commands for ARP Rotation tab
@@ -237,12 +235,13 @@ frame_arp_buttons.pack()
 
 # Add button for selecting values in ARP parameters Treeview
 select_button_arp = tk.Button(frame_arp_buttons, text="Select ARP",
-                              command=lambda: select_arp(equipment_tree, entry_arp_id))
+                              command=lambda: select_arp(equipment_tree, entry_arp_id,
+                                                         entry_arp_auth_token, entry_arp_status))
 select_button_arp.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for selecting Base point in Network points Treeview
 select_button_base = tk.Button(frame_arp_buttons, text="Select Base point",
-                               command=lambda: select_base(network_tree))
+                               command=lambda: select_base(network_tree, entry_arp_base))
 select_button_base.grid(row=0, column=1, pady=5, padx=5)
 
 # Add button for selecting orientation point in Network points Treeview
