@@ -1,5 +1,5 @@
 """
-   Check if hardware is connected by making an API request and update the Tkinter Entry field.
+   Check if ARP is connected by making an API request and update the Tkinter Entry field.
 """
 
 import requests
