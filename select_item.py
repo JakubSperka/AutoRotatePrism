@@ -14,6 +14,7 @@ selected_arp_id = pd.DataFrame()
 selected_base = pd.DataFrame()
 selected_base_id = pd.DataFrame()
 selected_orientation = pd.DataFrame()
+selected_orientation_id = pd.DataFrame()
 selected_rotation = pd.DataFrame()
 selected_arp_token = pd.DataFrame()
 
@@ -81,11 +82,13 @@ def select_base(tree_name, entry_field):
         print(selected_base)
 
         # Insert selected_arp_id into the entry field
+        entry_field.config(state="normal")
         entry_field.delete(0, tk.END)  # Clear the entry field
         entry_field.insert(0, selected_base_id)  # Insert selected_arp_id
+        entry_field.config(state="readonly")
 
 
-def select_orientation(tree_name):
+def select_orientation(tree_name, entry_field):
     current_orientation = tree_name.item(tree_name.focus())['values']
 
     if not current_orientation:
@@ -94,8 +97,17 @@ def select_orientation(tree_name):
         global selected_orientation
         selected_orientation = pd.DataFrame([current_orientation], columns=["ID", "X", "Y", "H", "Code"])
 
+        global selected_orientation_id
+        selected_orientation_id = selected_orientation["ID"].astype('string').iloc[0]
+
         print("Selected ARP Orientation point:")
         print(selected_orientation)
+
+        # Insert selected_arp_id into the entry field
+        entry_field.config(state="normal")
+        entry_field.delete(0, tk.END)  # Clear the entry field
+        entry_field.insert(0, selected_orientation_id)  # Insert selected_arp_id
+        entry_field.config(state="readonly")
 
 
 def select_rotation(tree_name):

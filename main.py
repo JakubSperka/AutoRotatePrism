@@ -246,7 +246,7 @@ select_button_base.grid(row=0, column=1, pady=5, padx=5)
 
 # Add button for selecting orientation point in Network points Treeview
 select_button_orientation = tk.Button(frame_arp_buttons, text="Select Orientation point",
-                                      command=lambda: select_orientation(network_tree))
+                                      command=lambda: select_orientation(network_tree, entry_arp_orientation))
 select_button_orientation.grid(row=0, column=2, pady=5, padx=5)
 
 # Add button for selecting rotation point in temp points Treeview
