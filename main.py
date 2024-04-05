@@ -24,7 +24,6 @@ frame_map_view.grid(row=0, column=0, rowspan=2)
 map_view = tkmap.TkinterMapView(frame_map_view, width=510, height=510, corner_radius=0)
 map_view.set_position(48.735174, 19.149735)
 map_view.set_zoom(15)
-# map_view.set_tile_server("https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=50)
 map_view.set_tile_server("https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg", max_zoom=20)
 map_view.pack()
 
