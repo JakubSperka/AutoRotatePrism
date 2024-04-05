@@ -22,7 +22,11 @@ def place_markers(tree_name, map_view):
                 marker_4326 = transform_5514(marker_y_5514, marker_x_5514)
 
                 # Set marker on map_view and store the marker object
-                marker = map_view.set_marker(marker_4326[1], marker_4326[0], text=marker_id)
+                marker = map_view.set_marker(marker_4326[1], marker_4326[0], text=marker_id,
+                                             text_color="red",
+                                             marker_color_circle="grey",
+                                             marker_color_outside="red",
+                                             font=("Consolas", 12))
                 added_markers.append(marker)  # Add the marker to the list
             else:
                 print("Error: Incomplete values for item in treeview.")
@@ -33,6 +37,3 @@ def hide_markers():
     for marker in added_markers:
         marker.delete()  # Remove each marker from the map
     added_markers = []  # Clear the list of added markers
-
-
-
