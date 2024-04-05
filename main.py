@@ -4,11 +4,11 @@ Main program for APR Control panel GUI
 
 # Imported packages
 import tkintermapview as tkmap
-import tkinter as tk
 from tkinter import ttk
 from import_data import *
 from select_item import *
 from check_connection import *
+from center_mapview import *
 
 # Set root GUI window
 root = tk.Tk()
@@ -18,14 +18,18 @@ root.iconbitmap("compass.ico")
 """
 Commands for Map view tab
 """
-frame_map_view = tk.LabelFrame(root, text="Map view", padx=10, pady=10)
+frame_map_view = tk.LabelFrame(root, text="Map view", padx=5, pady=5)
 frame_map_view.grid(row=0, column=0, rowspan=2)
 
-map_view = tkmap.TkinterMapView(frame_map_view, width=510, height=510, corner_radius=0)
+map_view = tkmap.TkinterMapView(frame_map_view, width=500, height=500, corner_radius=0)
 map_view.set_position(48.735174, 19.149735)
 map_view.set_zoom(15)
-map_view.set_tile_server("https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg", max_zoom=20)
-map_view.pack()
+map_view.set_tile_server("https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg", max_zoom=19)
+map_view.pack(padx=2, pady=2)
+
+zoom_to_point = tk.Button(frame_map_view, text="Center to point",
+                          command=lambda: center_mapview(network_tree, map_view))
+zoom_to_point.pack(pady=5)
 
 
 """
@@ -65,14 +69,9 @@ network_tree.column("H", anchor="w", width=100)
 network_tree.column("Code", anchor="w", width=100)
 
 # Add button for importing network points
-import_button_network = tk.Button(frame_network_points, text="Import Point Data",
+import_button_network = tk.Button(frame_network_points, text="Import geodetic network points",
                                   command=lambda: import_network(network_tree))
 import_button_network.pack(pady=5)
-
-# Add button for selecting values in network points Treeview
-select_button_network = tk.Button(frame_network_points, text="Select Point",
-                                  command=lambda: select_point(network_tree))
-select_button_network.pack(pady=5)
 
 """
 Commands for Temp points tab
@@ -111,14 +110,9 @@ temp_tree.column("H", anchor="w", width=100)
 temp_tree.column("Code", anchor="w", width=100)
 
 # Add button for importing network points
-import_button_temp = tk.Button(frame_temp_points, text="Import Point Data",
+import_button_temp = tk.Button(frame_temp_points, text="Import temporary points",
                                command=lambda: import_temp(temp_tree))
 import_button_temp.pack(pady=5)
-
-# Add button for selecting values in network points Treeview
-select_button_temp = tk.Button(frame_temp_points, text="Select Point",
-                               command=lambda: select_point(temp_tree))
-select_button_temp.pack(pady=5)
 
 """
 Commands for Equipment tab
