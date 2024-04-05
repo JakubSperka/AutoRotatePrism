@@ -1,24 +1,38 @@
-import pandas as pd
 from transform_coord import *
 
+# Global list to keep track of added markers
+added_markers = []
 
-def place_marker(tree_name, map_view):
-    selected_point = tree_name.item(tree_name.focus())['values']
 
-    if not selected_point:
-        print("Error: No points Network Points imported/selected.")
+def place_markers(tree_name, map_view):
+    items = tree_name.get_children()
+
+    if not items:
+        print("Error: No points in Network Points imported.")
     else:
-        marker_point = pd.DataFrame([selected_point], columns=["ID", "X", "Y", "H", "Code"])
+        for item in items:
+            values = tree_name.item(item)['values']
 
-        marker_id = marker_point["ID"].iloc[0]
+            if values:
+                marker_id = values[0]
+                marker_x_5514 = values[1]
+                marker_y_5514 = values[2]
 
-        marker_x_5514 = marker_point["X"].iloc[0]
-        marker_y_5514 = marker_point["Y"].iloc[0]
+                # Transform coordinates to 4326
+                marker_4326 = transform_5514(marker_y_5514, marker_x_5514)
 
-        print("Selected point:")
-        print(marker_x_5514)
-        print(marker_y_5514)
+                # Set marker on map_view and store the marker object
+                marker = map_view.set_marker(marker_4326[1], marker_4326[0], text=marker_id)
+                added_markers.append(marker)  # Add the marker to the list
+            else:
+                print("Error: Incomplete values for item in treeview.")
 
-        marker_4326 = transform_5514(marker_y_5514, marker_x_5514)
 
-        map_view.set_marker(marker_4326[1], marker_4326[0], text=marker_id)
+def hide_markers():
+    global added_markers
+    for marker in added_markers:
+        marker.delete()  # Remove each marker from the map
+    added_markers = []  # Clear the list of added markers
+
+
+

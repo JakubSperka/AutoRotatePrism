@@ -36,10 +36,11 @@ zoom_to_point = tk.Button(frame_map_view_buttons, text="Center to point",
 zoom_to_point.grid(row=0, column=0, pady=5, padx=5)
 
 show_marker = tk.Button(frame_map_view_buttons, text="Show marker",
-                        command=lambda: place_marker(network_tree, map_view))
+                        command=lambda: place_markers(network_tree, map_view))
 show_marker.grid(row=0, column=1, pady=5, padx=5)
 
-hide_marker = tk.Button(frame_map_view_buttons, text="Hide marker")
+hide_marker = tk.Button(frame_map_view_buttons, text="Hide marker",
+                        command=lambda: hide_markers())
 hide_marker.grid(row=0, column=2, pady=5, padx=5)
 
 
