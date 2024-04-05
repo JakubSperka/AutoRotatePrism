@@ -9,6 +9,7 @@ from import_data import *
 from select_item import *
 from check_connection import *
 from center_mapview import *
+from map_marker import *
 
 # Set root GUI window
 root = tk.Tk()
@@ -34,11 +35,12 @@ zoom_to_point = tk.Button(frame_map_view_buttons, text="Center to point",
                           command=lambda: center_mapview(network_tree, map_view))
 zoom_to_point.grid(row=0, column=0, pady=5, padx=5)
 
-show_marker = tk.Button(frame_map_view_buttons, text="Show marker")
+show_marker = tk.Button(frame_map_view_buttons, text="Show marker",
+                        command=lambda: place_marker(network_tree, map_view))
 show_marker.grid(row=0, column=1, pady=5, padx=5)
 
-show_marker = tk.Button(frame_map_view_buttons, text="Hide marker")
-show_marker.grid(row=0, column=2, pady=5, padx=5)
+hide_marker = tk.Button(frame_map_view_buttons, text="Hide marker")
+hide_marker.grid(row=0, column=2, pady=5, padx=5)
 
 
 """
