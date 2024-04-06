@@ -4,7 +4,7 @@ from transform_coord import *
 added_markers = []
 
 
-def place_markers(tree_name, map_view):
+def place_markers(tree_name, map_view, text_color, circle_color, outside_color):
     items = tree_name.get_children()
 
     if not items:
@@ -23,10 +23,10 @@ def place_markers(tree_name, map_view):
 
                 # Set marker on map_view and store the marker object
                 marker = map_view.set_marker(marker_4326[1], marker_4326[0], text=marker_id,
-                                             text_color="red",
-                                             marker_color_circle="grey",
-                                             marker_color_outside="red",
-                                             font=("Consolas", 12))
+                                             text_color=text_color,
+                                             marker_color_circle=circle_color,
+                                             marker_color_outside=outside_color,
+                                             font=("Consolas Bold", 10), )
                 added_markers.append(marker)  # Add the marker to the list
             else:
                 print("Error: Incomplete values for item in treeview.")
