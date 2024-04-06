@@ -347,7 +347,7 @@ selection_network.pack(anchor="w")
 selection_temp = tk.Radiobutton(frame_selection, text="Temporary points", variable=var_tree, value="temp_tree")
 selection_temp.pack(anchor="w")
 
-frame_movement = tk.LabelFrame(frame_arp_control, text="Movement")
+frame_movement = tk.LabelFrame(frame_arp_control, text="Movement WIP", bg="yellow")
 frame_movement.grid(row=2, column=0, pady=5, padx=5, sticky="w")
 
 # Add button for calculate heading and rotate
