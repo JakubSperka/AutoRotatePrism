@@ -53,7 +53,7 @@ show_marker_temp = tk.Button(frame_marker_buttons, text="Show Temporary points",
 show_marker_temp.grid(row=0, column=1, pady=5, padx=5)
 
 hide_marker = tk.Button(frame_marker_buttons, text="Hide markers",
-                        command=lambda: hide_markers())
+                        command=lambda: hide_markers(), bg="darkgray")
 hide_marker.grid(row=0, column=2, pady=5, padx=5)
 
 
@@ -208,19 +208,16 @@ delete_button_arp = tk.Button(frame_equipment_buttons, text="Delete selected ARP
 delete_button_arp.grid(row=0, column=1, pady=5, padx=5)
 
 
-
-
-
 """
 Commands for ARP Status tab
 """
-frame_arp_control = tk.LabelFrame(frame_points, text="Status and control", padx=10, pady=10)
+frame_arp_control = tk.LabelFrame(frame_points, text="Status and control", padx=5, pady=5)
 frame_arp_control.pack()
 
 # Create labelframe for ARP control widgets
 frame_arp_status = tk.LabelFrame(frame_arp_control,
-                                 text="ARP Status", padx=10, pady=10)
-frame_arp_status.pack(anchor="w")
+                                 text="ARP Status", padx=5, pady=5)
+frame_arp_status.grid(row=0, column=0, pady=5, padx=5)
 
 # Create label for ARP ID entry widgets
 label_entry_arp_id = tk.Label(frame_arp_status, text="ARP ID:")
@@ -235,7 +232,7 @@ label_entry_arp_auth_token = tk.Label(frame_arp_status, text="Auth. Token:")
 label_entry_arp_auth_token.grid(row=1, column=0, sticky="e")
 
 # Create entry widget for ARP auth token
-entry_arp_auth_token = tk.Entry(frame_arp_status, width=40)
+entry_arp_auth_token = tk.Entry(frame_arp_status, width=37)
 entry_arp_auth_token.grid(row=1, column=1, sticky="w")
 
 # Create label for ARP Status entry widgets
@@ -243,7 +240,7 @@ label_entry_arp_status = tk.Label(frame_arp_status, text="Status:")
 label_entry_arp_status.grid(row=2, column=0, sticky="e")
 
 # Create entry widget for ARP Status
-entry_arp_status = tk.Entry(frame_arp_status, width=40)
+entry_arp_status = tk.Entry(frame_arp_status, width=37)
 entry_arp_status.grid(row=2, column=1, sticky="w")
 
 """
@@ -252,15 +249,15 @@ Commands for ARP Rotation tab
 
 # Create labelframe for ARP control widgets
 frame_arp_rotation = tk.LabelFrame(frame_arp_control,
-                                   text="ARP Rotation", padx=10, pady=10)
-frame_arp_rotation.pack(anchor="w")
+                                   text="ARP Rotation", padx=5, pady=5)
+frame_arp_rotation.grid(row=0, column=1, pady=5, padx=5)
 
 # Create label for ARP Base point
 label_entry_arp_base = tk.Label(frame_arp_rotation, text="Base point:")
 label_entry_arp_base.grid(row=0, column=0, sticky="e")
 
 # Create entry widget for ARP Base point
-entry_arp_base = tk.Entry(frame_arp_rotation, width=25)
+entry_arp_base = tk.Entry(frame_arp_rotation, width=10)
 entry_arp_base.grid(row=0, column=1)
 
 # Create label for ARP Orientation point
@@ -268,7 +265,7 @@ label_entry_arp_orientation = tk.Label(frame_arp_rotation, text="Orientation poi
 label_entry_arp_orientation.grid(row=1, sticky="e")
 
 # Create entry widget for ARP Orientation point
-entry_arp_orientation = tk.Entry(frame_arp_rotation, width=25)
+entry_arp_orientation = tk.Entry(frame_arp_rotation, width=10)
 entry_arp_orientation.grid(row=1, column=1)
 
 # Create label for ARP Rotation point
@@ -276,12 +273,12 @@ label_entry_arp_rotation = tk.Label(frame_arp_rotation, text="Rotation point:")
 label_entry_arp_rotation.grid(row=2, sticky="e")
 
 # Create entry widget for ARP Rotation point
-entry_arp_rotation = tk.Entry(frame_arp_rotation, width=25)
+entry_arp_rotation = tk.Entry(frame_arp_rotation, width=10)
 entry_arp_rotation.grid(row=2, column=1)
 
 # Frame for ARP control buttons
-frame_arp_buttons = tk.LabelFrame(frame_arp_control, text="Rotation parameters")
-frame_arp_buttons.pack()
+frame_arp_buttons = tk.LabelFrame(frame_arp_control, text="ARP orientation")
+frame_arp_buttons.grid(row=1, column=0, pady=5, padx=5)
 
 # Add button for selecting values in ARP parameters Treeview
 select_button_arp = tk.Button(frame_arp_buttons, text="Select ARP",
@@ -299,16 +296,19 @@ select_button_orientation = tk.Button(frame_arp_buttons, text="Select Orientatio
                                       command=lambda: select_orientation(network_tree, entry_arp_orientation))
 select_button_orientation.grid(row=0, column=2, pady=5, padx=5)
 
+frame_rotation = tk.LabelFrame(frame_arp_control, text="Target selection")
+frame_rotation.grid(row=1, column=1, pady=5, padx=5)
+
 # Add button for selecting rotation point in temp points Treeview
-select_button_rotation = tk.Button(frame_arp_buttons, text="Select Rotation point",
+select_button_rotation = tk.Button(frame_rotation, text="Select Rotation point",
                                    command=lambda: select_rotation(temp_tree, entry_arp_rotation))
-select_button_rotation.grid(row=0, column=3, pady=5, padx=5)
+select_button_rotation.grid(row=0, column=0, pady=5, padx=5)
 
 frame_movement = tk.LabelFrame(frame_arp_control, text="Movement")
-frame_movement.pack()
+frame_movement.grid(row=2, column=0, columnspan=2, pady=5, padx=5)
 
 # Add button for calculate heading and rotate
-button_rotate = tk.Button(frame_movement, text="Rotate selected ARP", height=2, width=40, bg="green", fg="white")
+button_rotate = tk.Button(frame_movement, text="Rotate selected ARP", height=2, width=40, bg="forestgreen", fg="white")
 button_rotate.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for reset rotation
