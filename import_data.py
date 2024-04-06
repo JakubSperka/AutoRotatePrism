@@ -8,6 +8,7 @@ import pandas as pd
 
 # Define variables as dataframes for defining global variables later in code
 network_points = pd.DataFrame()
+temp_points = pd.DataFrame()
 arps = pd.DataFrame()
 
 # Function to import geodetic network points

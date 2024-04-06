@@ -10,10 +10,11 @@ from select_item import *
 from check_connection import *
 from center_mapview import *
 from map_marker import *
+from create_point import *
 
 # Set root GUI window
 root = tk.Tk()
-root.title("ARP Control Panel v.1.0.0 - Alpha Striker")
+root.title("ARP Control Panel v.1.0.0 \"Alpha Striker\"")
 root.iconbitmap("compass.ico")
 
 """
@@ -22,7 +23,7 @@ Commands for Map view tab
 frame_map_view = tk.LabelFrame(root, text="Map view", padx=10, pady=10)
 frame_map_view.grid(row=0, column=0, rowspan=2, sticky="n")
 
-map_view = tkmap.TkinterMapView(frame_map_view, width=550, height=550, corner_radius=0)
+map_view = tkmap.TkinterMapView(frame_map_view, width=570, height=520, corner_radius=0)
 map_view.set_position(48.735174, 19.149735)
 map_view.set_zoom(15)
 map_view.set_tile_server("https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg", max_zoom=19)
@@ -55,6 +56,35 @@ show_marker_temp.grid(row=0, column=1, pady=5, padx=5)
 hide_marker = tk.Button(frame_marker_buttons, text="Hide markers",
                         command=lambda: hide_markers(), bg="darkgray")
 hide_marker.grid(row=0, column=2, pady=5, padx=5)
+
+frame_create_point = tk.LabelFrame(frame_map_view, text="Create temporary point", padx=2, pady=2)
+frame_create_point.grid(row=3, column=0, pady=5, padx=5, sticky="w")
+
+label_create_point_id = tk.Label(frame_create_point, text="Point ID:")
+label_create_point_id.grid(row=0, column=0, sticky="e")
+
+entry_create_point_id = tk.Entry(frame_create_point, width=30)
+entry_create_point_id.grid(row=0, column=1, sticky="w")
+
+label_create_point_coord = tk.Label(frame_create_point, text="Coordinates:")
+label_create_point_coord.grid(row=1, column=0, sticky="e")
+
+entry_create_point_coord = tk.Entry(frame_create_point, width=30)
+entry_create_point_coord.grid(row=1, column=1, sticky="w")
+
+label_create_point_code = tk.Label(frame_create_point, text="Survey code:")
+label_create_point_code.grid(row=2, column=0, sticky="e")
+
+entry_create_point_code = tk.Entry(frame_create_point, width=30)
+entry_create_point_code.grid(row=2, column=1, sticky="w")
+
+# Add button for importing network points
+create_point_button = tk.Button(frame_create_point, text="Create temporary point",
+                                command=lambda: create_point(entry_create_point_id,
+                                                             entry_create_point_coord,
+                                                             entry_create_point_code,
+                                                             temp_tree))
+create_point_button.grid(row=3, column=0, columnspan=2, pady=5, padx=5, sticky="w")
 
 
 """
