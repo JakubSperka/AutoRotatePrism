@@ -1,7 +1,6 @@
 """
 Main program for APR Control panel GUI
 """
-import tkinter
 
 # Imported packages
 import tkintermapview as tkmap
