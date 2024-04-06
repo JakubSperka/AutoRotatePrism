@@ -1,6 +1,7 @@
 """
 Main program for APR Control panel GUI
 """
+import tkinter
 
 # Imported packages
 import tkintermapview as tkmap
@@ -13,7 +14,7 @@ from map_marker import *
 
 # Set root GUI window
 root = tk.Tk()
-root.title("ARP Control Panel v.1.0.0")
+root.title("ARP Control Panel v.1.0.0 - Alpha Striker")
 root.iconbitmap("compass.ico")
 
 """
@@ -217,7 +218,7 @@ frame_arp_control.pack()
 # Create labelframe for ARP control widgets
 frame_arp_status = tk.LabelFrame(frame_arp_control,
                                  text="ARP Status", padx=5, pady=5)
-frame_arp_status.grid(row=0, column=0, pady=5, padx=5)
+frame_arp_status.grid(row=0, column=0, pady=5, padx=5, sticky="w")
 
 # Create label for ARP ID entry widgets
 label_entry_arp_id = tk.Label(frame_arp_status, text="ARP ID:")
@@ -249,8 +250,8 @@ Commands for ARP Rotation tab
 
 # Create labelframe for ARP control widgets
 frame_arp_rotation = tk.LabelFrame(frame_arp_control,
-                                   text="ARP Rotation", padx=5, pady=5)
-frame_arp_rotation.grid(row=0, column=1, pady=5, padx=5)
+                                   text="Control points", padx=5, pady=5)
+frame_arp_rotation.grid(row=0, column=1, columnspan=2, pady=5, padx=5, sticky="w")
 
 # Create label for ARP Base point
 label_entry_arp_base = tk.Label(frame_arp_rotation, text="Base point:")
@@ -278,7 +279,7 @@ entry_arp_rotation.grid(row=2, column=1)
 
 # Frame for ARP control buttons
 frame_arp_buttons = tk.LabelFrame(frame_arp_control, text="ARP orientation")
-frame_arp_buttons.grid(row=1, column=0, pady=5, padx=5)
+frame_arp_buttons.grid(row=1, column=0, pady=5, padx=5, sticky="w")
 
 # Add button for selecting values in ARP parameters Treeview
 select_button_arp = tk.Button(frame_arp_buttons, text="Select ARP",
@@ -288,32 +289,49 @@ select_button_arp.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for selecting Base point in Network points Treeview
 select_button_base = tk.Button(frame_arp_buttons, text="Select Base point",
-                               command=lambda: select_base(network_tree, entry_arp_base))
+                               command=lambda: select_base(network_tree if var_tree.get() == "network_tree"
+                                                           else temp_tree, entry_arp_base))
 select_button_base.grid(row=0, column=1, pady=5, padx=5)
 
 # Add button for selecting orientation point in Network points Treeview
 select_button_orientation = tk.Button(frame_arp_buttons, text="Select Orientation point",
-                                      command=lambda: select_orientation(network_tree, entry_arp_orientation))
+                                      command=lambda: select_orientation(network_tree if
+                                                                         var_tree.get() == "network_tree"
+                                                                         else temp_tree, entry_arp_orientation))
 select_button_orientation.grid(row=0, column=2, pady=5, padx=5)
 
 frame_rotation = tk.LabelFrame(frame_arp_control, text="Target selection")
-frame_rotation.grid(row=1, column=1, pady=5, padx=5)
+frame_rotation.grid(row=1, column=1, pady=5, padx=5, sticky="w")
 
 # Add button for selecting rotation point in temp points Treeview
 select_button_rotation = tk.Button(frame_rotation, text="Select Rotation point",
-                                   command=lambda: select_rotation(temp_tree, entry_arp_rotation))
+                                   command=lambda: select_rotation(network_tree if var_tree.get() == "network_tree"
+                                                                   else temp_tree, entry_arp_rotation))
 select_button_rotation.grid(row=0, column=0, pady=5, padx=5)
 
+frame_selection = tk.LabelFrame(frame_arp_control, text="Select from")
+frame_selection.grid(row=2, column=1, pady=5, padx=5, sticky="w")
+
+var_tree = tk.StringVar(value="network_tree")
+selection_network = tk.Radiobutton(frame_selection, text="Network points", variable=var_tree, value="network_tree")
+selection_network.pack(anchor="w")
+selection_temp = tk.Radiobutton(frame_selection, text="Temporary points", variable=var_tree, value="temp_tree")
+selection_temp.pack(anchor="w")
+
 frame_movement = tk.LabelFrame(frame_arp_control, text="Movement")
-frame_movement.grid(row=2, column=0, columnspan=2, pady=5, padx=5)
+frame_movement.grid(row=2, column=0, pady=5, padx=5, sticky="w")
 
 # Add button for calculate heading and rotate
-button_rotate = tk.Button(frame_movement, text="Rotate selected ARP", height=2, width=40, bg="forestgreen", fg="white")
+button_rotate = tk.Button(frame_movement, text="Rotate ARP", height=2, width=20, bg="forestgreen", fg="white")
 button_rotate.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for reset rotation
-button_reset = tk.Button(frame_movement, text="Reset ARP rotation", height=2, width=20)
+button_reset = tk.Button(frame_movement, text="Reset rotation", height=2, width=15)
 button_reset.grid(row=0, column=1, pady=5, padx=5)
+
+# Add button for reset rotation
+button_lock = tk.Button(frame_movement, text="Lock ARP", height=2, width=10)
+button_lock.grid(row=0, column=2, pady=5, padx=5)
 
 
 # Initialize mainloop for the root window
