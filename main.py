@@ -28,24 +28,33 @@ map_view.set_zoom(15)
 map_view.set_tile_server("https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg", max_zoom=19)
 map_view.grid(row=0, column=0, padx=5, pady=5)
 
-frame_map_view_buttons = tk.Frame(frame_map_view)
-frame_map_view_buttons.grid(row=1, column=0, pady=5, padx=5)
+frame_map_view_buttons = tk.LabelFrame(frame_map_view, text="Center map view", padx=2, pady=2)
+frame_map_view_buttons.grid(row=1, column=0, pady=5, padx=5, sticky="w")
 
-zoom_to_point = tk.Button(frame_map_view_buttons, text="Center to point",
-                          command=lambda: center_mapview(network_tree, map_view))
-zoom_to_point.grid(row=0, column=0, pady=5, padx=5)
+zoom_to_network_point = tk.Button(frame_map_view_buttons, text="Center to network point",
+                                  command=lambda: center_mapview(network_tree, map_view))
+zoom_to_network_point.grid(row=0, column=0, pady=5, padx=5)
 
-show_marker_network = tk.Button(frame_map_view_buttons, text="Show Network points",
-                                command=lambda: place_markers(network_tree, map_view, "red", "grey", "red"))
-show_marker_network.grid(row=0, column=1, pady=5, padx=5)
+zoom_to_temp_point = tk.Button(frame_map_view_buttons, text="Center to temporary point",
+                               command=lambda: center_mapview(temp_tree, map_view))
+zoom_to_temp_point.grid(row=0, column=1, pady=5, padx=5)
 
-show_marker_temp = tk.Button(frame_map_view_buttons, text="Show Temporary points",
-                             command=lambda: place_markers(temp_tree, map_view, "yellow", "grey", "yellow"))
-show_marker_temp.grid(row=0, column=2, pady=5, padx=5)
+frame_marker_buttons = tk.LabelFrame(frame_map_view, text="Map markers", padx=2, pady=2)
+frame_marker_buttons.grid(row=2, column=0, pady=5, padx=5, sticky="w")
 
-hide_marker = tk.Button(frame_map_view_buttons, text="Hide markers",
+show_marker_network = tk.Button(frame_marker_buttons, text="Show Network points",
+                                command=lambda: place_markers(network_tree, map_view, "red",
+                                                              "grey", "red"))
+show_marker_network.grid(row=0, column=0, pady=5, padx=5)
+
+show_marker_temp = tk.Button(frame_marker_buttons, text="Show Temporary points",
+                             command=lambda: place_markers(temp_tree, map_view, "yellow",
+                                                           "grey", "yellow"))
+show_marker_temp.grid(row=0, column=1, pady=5, padx=5)
+
+hide_marker = tk.Button(frame_marker_buttons, text="Hide markers",
                         command=lambda: hide_markers())
-hide_marker.grid(row=0, column=3, pady=5, padx=5)
+hide_marker.grid(row=0, column=2, pady=5, padx=5)
 
 
 """
@@ -88,10 +97,18 @@ network_tree.column("Y", anchor="w", width=100)
 network_tree.column("H", anchor="w", width=100)
 network_tree.column("Code", anchor="w", width=100)
 
+frame_network_points_buttons = tk.Frame(frame_network_points)
+frame_network_points_buttons.pack(anchor="w")
+
 # Add button for importing network points
-import_button_network = tk.Button(frame_network_points, text="Import geodetic network points",
+import_button_network = tk.Button(frame_network_points_buttons, text="Import geodetic network points",
                                   command=lambda: import_network(network_tree))
-import_button_network.pack(pady=5)
+import_button_network.grid(row=0, column=0, pady=5, padx=5)
+
+delete_button_network = tk.Button(frame_network_points_buttons, text="Delete selected point",
+                                  command=lambda: delete_point(network_tree), bg="red", fg="white")
+delete_button_network.grid(row=0, column=1, pady=5, padx=5)
+
 
 """
 Commands for Temp points tab
@@ -129,10 +146,17 @@ temp_tree.column("Y", anchor="w", width=100)
 temp_tree.column("H", anchor="w", width=100)
 temp_tree.column("Code", anchor="w", width=100)
 
+frame_temp_points_buttons = tk.Frame(frame_temp_points)
+frame_temp_points_buttons.pack()
+
 # Add button for importing network points
-import_button_temp = tk.Button(frame_temp_points, text="Import temporary points",
+import_button_temp = tk.Button(frame_temp_points_buttons, text="Import temporary points",
                                command=lambda: import_temp(temp_tree))
-import_button_temp.pack(pady=5)
+import_button_temp.grid(row=0, column=0, pady=5, padx=5)
+
+delete_button_temp = tk.Button(frame_temp_points_buttons, text="Delete selected point",
+                               command=lambda: delete_point(temp_tree), bg="red", fg="white")
+delete_button_temp.grid(row=0, column=1, pady=5, padx=5)
 
 """
 Commands for Equipment tab
@@ -266,14 +290,14 @@ select_button_orientation.grid(row=0, column=2, pady=5, padx=5)
 
 # Add button for selecting rotation point in temp points Treeview
 select_button_rotation = tk.Button(frame_arp_buttons, text="Select Rotation point",
-                                   command=lambda: select_rotation(temp_tree))
+                                   command=lambda: select_rotation(temp_tree, entry_arp_rotation))
 select_button_rotation.grid(row=0, column=3, pady=5, padx=5)
 
 frame_movement = tk.Frame(frame_arp_buttons)
 frame_movement.grid(row=1, column=0, columnspan=4, pady=5, padx=5)
 
 # Add button for calculate heading and rotate
-button_rotate = tk.Button(frame_movement, text="Rotate selected ARP", height=2, width=40)
+button_rotate = tk.Button(frame_movement, text="Rotate selected ARP", height=2, width=40, bg="green", fg="white")
 button_rotate.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for reset rotation

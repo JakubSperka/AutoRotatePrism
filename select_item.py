@@ -4,7 +4,6 @@ Functions to select data from treeview widget used as command in tkinter button
 
 # Import modules and libraries
 import pandas as pd
-import tkinter as tk
 from check_connection import *
 
 # Define variables as dataframes for defining global variables later in code
@@ -16,6 +15,7 @@ selected_base_id = pd.DataFrame()
 selected_orientation = pd.DataFrame()
 selected_orientation_id = pd.DataFrame()
 selected_rotation = pd.DataFrame()
+selected_rotation_id = pd.DataFrame()
 selected_arp_token = pd.DataFrame()
 
 
@@ -30,6 +30,15 @@ def select_point(tree_name):
 
         print("Selected Network point:")
         print(selected_point)
+
+
+def delete_point(tree_name):
+    current_point = tree_name.selection()
+
+    if not current_point:
+        print("Error: No points Network Points imported/selected.")
+    else:
+        tree_name.delete(current_point)
 
 
 def select_arp(tree_name, entry_field_id, entry_field_token, entry_arp_status):
@@ -110,7 +119,7 @@ def select_orientation(tree_name, entry_field):
         entry_field.config(state="readonly")
 
 
-def select_rotation(tree_name):
+def select_rotation(tree_name, entry_field):
     current_rotation = tree_name.item(tree_name.focus())['values']
 
     if not current_rotation:
@@ -119,5 +128,14 @@ def select_rotation(tree_name):
         global selected_rotation
         selected_rotation = pd.DataFrame([current_rotation], columns=["ID", "X", "Y", "H", "Code"])
 
+        global selected_rotation_id
+        selected_rotation_id = selected_rotation["ID"].astype('string').iloc[0]
+
         print("Selected ARP Rotation point:")
         print(selected_rotation)
+
+        # Insert selected_arp_id into the entry field
+        entry_field.config(state="normal")
+        entry_field.delete(0, tk.END)  # Clear the entry field
+        entry_field.insert(0, selected_rotation_id)  # Insert selected_arp_id
+        entry_field.config(state="readonly")
