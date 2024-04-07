@@ -103,7 +103,7 @@ map_google_satellite = tk.Radiobutton(frame_map_server, text="Google Satellite",
                                       value="https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga")
 map_google_satellite.pack(anchor="w")
 map_google_hybrid = tk.Radiobutton(frame_map_server, text="Google Hybrid", variable=map_server,
-                                   value="http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}")
+                                   value="https://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}")
 map_google_hybrid.pack(anchor="w")
 
 map_google_hybrid = tk.Radiobutton(frame_map_server, text="Freemap Outdoor", variable=map_server,
