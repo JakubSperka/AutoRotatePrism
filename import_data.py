@@ -1,27 +1,30 @@
-"""
-Functions to import data from txt files used as command in tkinter button
-"""
+# Import necessary modules and libraries
+from tkinter import filedialog  # Module for file dialog
+import pandas as pd  # Module for data manipulation and analysis
 
-# Import modules and libraries
-from tkinter import filedialog
-import pandas as pd
-
-# Define variables as dataframes for defining global variables later in code
+# Define global variables as empty DataFrames
 network_points = pd.DataFrame()
 temp_points = pd.DataFrame()
 arps = pd.DataFrame()
 
-# Function to import geodetic network points
-
 
 def import_network(tree_name):
-    # Get filepath from opened file explorer dialog
+    """
+    Function to import geodetic network points from a text file.
+
+    Parameters:
+    tree_name (tkinter.Treeview): Treeview widget to display imported data.
+
+    Returns:
+    None
+    """
+    # Get file path using file dialog
     file_path = filedialog.askopenfilename(title="Select Point Data File", filetypes=[("Text files", "*.txt")])
 
-    # Sequence after retrieving the filepath
+    # Process after retrieving the file path
     if file_path:
         try:
-            # Defining global variable and reading, data from .txt file and inserting into dataframe
+            # Define global variable and read data from the text file into a DataFrame
             global network_points
             network_points = pd.read_csv(file_path, names=["ID", "X", "Y", "H", "Code"], delimiter=',')
 
@@ -35,7 +38,7 @@ def import_network(tree_name):
             for index, row in network_points.iterrows():
                 tree_name.insert("", "end", values=(row["ID"], row["X"], row["Y"], row["H"], row["Code"]))
 
-        # Error message when invalid file is selected
+        # Error handling for invalid file selection
         except Exception as e:
             print(f"Error reading the file: {e}")
 
@@ -44,14 +47,24 @@ def import_network(tree_name):
         print("Error: No file selected.")
 
 
+# Function to import temporary points from a text file
 def import_temp(tree_name):
-    # Get filepath from opened file explorer dialog
+    """
+    Function to import temporary points from a text file.
+
+    Parameters:
+    tree_name (tkinter.Treeview): Treeview widget to display imported data.
+
+    Returns:
+    None
+    """
+    # Get file path using file dialog
     file_path = filedialog.askopenfilename(title="Select Point Data File", filetypes=[("Text files", "*.txt")])
 
-    # Sequence after retrieving the filepath
+    # Process after retrieving the file path
     if file_path:
         try:
-            # Defining global variable and reading, data from .txt file and inserting into dataframe
+            # Define global variable and read data from the text file into a DataFrame
             global temp_points
             temp_points = pd.read_csv(file_path, names=["ID", "X", "Y", "H", "Code"], delimiter=',')
 
@@ -65,7 +78,7 @@ def import_temp(tree_name):
             for index, row in temp_points.iterrows():
                 tree_name.insert("", "end", values=(row["ID"], row["X"], row["Y"], row["H"], row["Code"]))
 
-        # Error message when invalid file is selected
+        # Error handling for invalid file selection
         except Exception as e:
             print(f"Error reading the file: {e}")
 
@@ -74,14 +87,24 @@ def import_temp(tree_name):
         print("Error: No file selected.")
 
 
+# Function to import ARP (Automatic Target Recognition) points from a text file
 def import_arp(tree_name):
-    # Get filepath from opened file explorer dialog
+    """
+    Function to import ARP (Automatic Target Recognition) points from a text file.
+
+    Parameters:
+    tree_name (tkinter.Treeview): Treeview widget to display imported data.
+
+    Returns:
+    None
+    """
+    # Get file path using file dialog
     file_path = filedialog.askopenfilename(title="Select Point Data File", filetypes=[("Text files", "*.txt")])
 
-    # Sequence after retrieving the filepath
+    # Process after retrieving the file path
     if file_path:
         try:
-            # Defining global variable and reading, data from .txt file and inserting into dataframe
+            # Define global variable and read data from the text file into a DataFrame
             global arps
             arps = pd.read_csv(file_path, names=["ARP_ID", "Auth_token", "Prism_height", "Prism_constant"],
                                delimiter=',')
@@ -97,10 +120,10 @@ def import_arp(tree_name):
                 tree_name.insert("", "end", values=(row["ARP_ID"], row["Auth_token"], row["Prism_height"],
                                                     row["Prism_constant"]))
 
-        # Error message when invalid file is selected
+        # Error handling for invalid file selection
         except Exception as e:
             print(f"Error reading the file: {e}")
 
     # Error message when no file is selected
     else:
-        print("No file selected.")
+        print("Error: No file selected.")
