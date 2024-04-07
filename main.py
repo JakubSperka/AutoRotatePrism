@@ -16,6 +16,8 @@ from create_point import *
 root = tk.Tk()
 root.title("ARP Control Panel v.1.0.0 \"Alpha Striker\"")
 root.iconbitmap("compass.ico")
+root.resizable(False, False)
+
 
 """
 Commands for Map view tab
