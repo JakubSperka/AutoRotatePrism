@@ -1,7 +1,8 @@
 import numpy as np
+from select_item import *
 
 
-def calculate_angle(base_point, orientation_point, rotation_point):
+def calculate_angle():
     """
        Calculate the angle in degrees between the heading from a base point to an orientation point
        and the direction towards a rotation point, respecting tangent quadrants.
@@ -20,9 +21,14 @@ def calculate_angle(base_point, orientation_point, rotation_point):
        """
 
     # Extract coordinates of the points
-    base_x, base_y = base_point['X'], base_point['Y']
-    orientation_x, orientation_y = orientation_point['X'], orientation_point['Y']
-    rotation_x, rotation_y = rotation_point['X'], rotation_point['Y']
+    base_x = selected_base.get("X")
+    base_y = selected_base.get("Y")
+    orientation_x = selected_orientation.get("X")
+    orientation_y = selected_orientation.get("Y")
+    rotation_x = selected_rotation.get("X")
+    rotation_y = selected_rotation.get("Y")
+
+    print(base_x, base_y, orientation_x, orientation_y, rotation_x, rotation_y)
 
     # Vector from base point to orientation point
     vec_orientation = np.array([orientation_x - base_x, orientation_y - base_y])
