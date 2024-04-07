@@ -8,7 +8,8 @@ def calculate_angle(base_point, orientation_point, rotation_point):
 
        Parameters:
        - base_point (DataFrame row): DataFrame row representing the base point with 'X' and 'Y' coordinates.
-       - orientation_point (DataFrame row): DataFrame row representing the orientation point with 'X' and 'Y' coordinates.
+       - orientation_point (DataFrame row): DataFrame row representing the orientation point with
+       'X' and 'Y' coordinates.
        - rotation_point (DataFrame row): DataFrame row representing the rotation point with 'X' and 'Y' coordinates.
 
        Returns:
@@ -37,7 +38,7 @@ def calculate_angle(base_point, orientation_point, rotation_point):
     # Calculate the cosine of the angle using dot product formula
     cosine_angle = dot_product / (norm_orientation * norm_rotation)
 
-    # Compute the angle in radians using arccos
+    # Compute the angle in radians using arc cos
     angle_radians = np.arccos(cosine_angle)
 
     # Convert radians to degrees
