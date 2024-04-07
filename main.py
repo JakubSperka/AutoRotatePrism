@@ -23,11 +23,12 @@ Commands for Map view tab
 frame_map_view = tk.LabelFrame(root, text="Map view", padx=10, pady=10)
 frame_map_view.grid(row=0, column=0, rowspan=2, sticky="n")
 
+map_server = tk.StringVar(value="https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg")
 map_view = tkmap.TkinterMapView(frame_map_view, width=570, height=520, corner_radius=0)
 map_view.set_position(48.7284587, 19.1416669)
 map_view.set_zoom(13)
-map_view.set_tile_server("https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg", max_zoom=19)
-map_view.grid(row=0, column=0, padx=5, pady=5)
+map_view.set_tile_server(map_server.get(), max_zoom=19)
+map_view.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
 
 frame_map_view_buttons = tk.LabelFrame(frame_map_view, text="Center map view", padx=2, pady=2)
 frame_map_view_buttons.grid(row=1, column=0, pady=5, padx=5, sticky="w")
@@ -84,8 +85,34 @@ create_point_button = tk.Button(frame_create_point, text="Create temporary point
                                                              entry_create_point_coord,
                                                              entry_create_point_code,
                                                              temp_tree))
-create_point_button.grid(row=3, column=0, columnspan=2, pady=5, padx=5, sticky="w")
+create_point_button.grid(row=3, column=0, columnspan=2, pady=5, padx=5)
 
+frame_map_server = tk.LabelFrame(frame_map_view, text="Select base map")
+frame_map_server.grid(row=1, column=1, rowspan=3, pady=5, padx=5, sticky="ne")
+
+map_ugkk = tk.Radiobutton(frame_map_server, text="Ortho ÚGKK", variable=map_server,
+                          value="https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg")
+map_ugkk.pack(anchor="w")
+map_oms = tk.Radiobutton(frame_map_server, text="OpenStreetMap", variable=map_server,
+                         value="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png")
+map_oms.pack(anchor="w")
+map_google_normal = tk.Radiobutton(frame_map_server, text="Google Maps", variable=map_server,
+                                   value="https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga")
+map_google_normal.pack(anchor="w")
+map_google_satellite = tk.Radiobutton(frame_map_server, text="Google Satellite", variable=map_server,
+                                      value="https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga")
+map_google_satellite.pack(anchor="w")
+map_google_hybrid = tk.Radiobutton(frame_map_server, text="Google Hybrid", variable=map_server,
+                                   value="http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}")
+map_google_hybrid.pack(anchor="w")
+
+map_google_hybrid = tk.Radiobutton(frame_map_server, text="Freemap Outdoor", variable=map_server,
+                                   value="https://outdoor.tiles.freemap.sk/{z}/{x}/{y}.jpg")
+map_google_hybrid.pack(anchor="w")
+
+map_refresh_button = tk.Button(frame_map_server, text="Refresh base map",
+                               command=lambda: map_view.set_tile_server(map_server.get(), max_zoom=19))
+map_refresh_button.pack(pady=5, padx=5)
 
 """
 Commands for Network points tab
@@ -121,11 +148,11 @@ network_tree.heading("Y", text="Y [m]", anchor="w")
 network_tree.heading("H", text="H [m]", anchor="w")
 network_tree.heading("Code", text="Survey code", anchor="w")
 
-network_tree.column("ID", anchor="w", width=100)
-network_tree.column("X", anchor="w", width=100)
-network_tree.column("Y", anchor="w", width=100)
-network_tree.column("H", anchor="w", width=100)
-network_tree.column("Code", anchor="w", width=100)
+network_tree.column("ID", anchor="w", width=110)
+network_tree.column("X", anchor="w", width=110)
+network_tree.column("Y", anchor="w", width=110)
+network_tree.column("H", anchor="w", width=110)
+network_tree.column("Code", anchor="w", width=110)
 
 frame_network_points_buttons = tk.Frame(frame_network_points)
 frame_network_points_buttons.pack(anchor="w")
@@ -170,11 +197,11 @@ temp_tree.heading("Y", text="Y [m]", anchor="w")
 temp_tree.heading("H", text="H [m]", anchor="w")
 temp_tree.heading("Code", text="Survey code", anchor="w")
 
-temp_tree.column("ID", anchor="w", width=100)
-temp_tree.column("X", anchor="w", width=100)
-temp_tree.column("Y", anchor="w", width=100)
-temp_tree.column("H", anchor="w", width=100)
-temp_tree.column("Code", anchor="w", width=100)
+temp_tree.column("ID", anchor="w", width=110)
+temp_tree.column("X", anchor="w", width=110)
+temp_tree.column("Y", anchor="w", width=110)
+temp_tree.column("H", anchor="w", width=110)
+temp_tree.column("Code", anchor="w", width=110)
 
 frame_temp_points_buttons = tk.Frame(frame_temp_points)
 frame_temp_points_buttons.pack(anchor="w")
@@ -220,10 +247,10 @@ equipment_tree.heading("Auth_token", text="Authentication token", anchor="w")
 equipment_tree.heading("Prism_height", text="Target height [m]", anchor="w")
 equipment_tree.heading("Prism_constant", text="Prism constant [mm]", anchor="w")
 
-equipment_tree.column("ARP_ID", anchor="w", width=50)
-equipment_tree.column("Auth_token", anchor="w", width=230)
-equipment_tree.column("Prism_height", anchor="w", width=100)
-equipment_tree.column("Prism_constant", anchor="w", width=120)
+equipment_tree.column("ARP_ID", anchor="w", width=55)
+equipment_tree.column("Auth_token", anchor="w", width=235)
+equipment_tree.column("Prism_height", anchor="w", width=130)
+equipment_tree.column("Prism_constant", anchor="w", width=130)
 
 frame_equipment_buttons = tk.Frame(frame_equipment)
 frame_equipment_buttons.pack(anchor="w")
