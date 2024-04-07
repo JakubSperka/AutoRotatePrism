@@ -24,8 +24,8 @@ frame_map_view = tk.LabelFrame(root, text="Map view", padx=10, pady=10)
 frame_map_view.grid(row=0, column=0, rowspan=2, sticky="n")
 
 map_view = tkmap.TkinterMapView(frame_map_view, width=570, height=520, corner_radius=0)
-map_view.set_position(48.735174, 19.149735)
-map_view.set_zoom(15)
+map_view.set_position(48.7284587, 19.1416669)
+map_view.set_zoom(13)
 map_view.set_tile_server("https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg", max_zoom=19)
 map_view.grid(row=0, column=0, padx=5, pady=5)
 
