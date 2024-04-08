@@ -1,5 +1,4 @@
 # Import necessary modules
-import pandas as pd
 from check_connection import *  # Assuming this module exists and is correctly imported
 import tkinter as tk  # Assuming tkinter is used for GUI
 from calculate_angle import *
