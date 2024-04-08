@@ -71,8 +71,10 @@ def select_arp(tree_name, entry_field_id, entry_field_token, entry_arp_status):
         global selected_arp
         selected_arp = pd.DataFrame([current_arp], columns=["ARP_ID", "Auth_token", "Prism_height", "Prism_constant"])
 
-        global selected_arp_id, selected_arp_token
+        global selected_arp_id
         selected_arp_id = str(selected_arp["ARP_ID"].iloc[0])
+
+        global selected_arp_token
         selected_arp_token = str(selected_arp["Auth_token"].iloc[0])
 
         print("Selected ARP:")
@@ -182,3 +184,47 @@ def select_rotation(tree_name, entry_field):
         entry_field.delete(0, tk.END)
         entry_field.insert(0, selected_rotation_id)
         entry_field.config(state="readonly")
+
+
+def update_angle(angle_value, entry_field):
+
+    token = selected_arp_token
+    pin = "v0"
+    value = str(angle_value)
+
+    print(f"Importing value: {value}")
+    print(f"Token: {token}")
+
+    url = f"https://blynk.cloud/external/api/update?token={token}&{pin}={value}"
+    print(url)
+
+    try:
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            entry_field.config(state="normal")
+            entry_field.delete(0, tk.END)  # Clear the entry field
+            entry_field.insert(0, "ARP Angle update successful")  # Update entry with success message
+            entry_field.config(state="readonly", foreground="green")
+        elif response.status_code == 400:
+            error_message = response.json().get('message')  # Extract error message from JSON response
+            if error_message:
+                entry_field.config(state="normal")
+                entry_field.delete(0, tk.END)  # Clear the entry field
+                entry_field.insert(0, f"API Error: {error_message}")  # Display API error message
+                entry_field.config(state="readonly", foreground="red")
+            else:
+                entry_field.config(state="normal")
+                entry_field.delete(0, tk.END)  # Clear the entry field
+                entry_field.insert(0, "Bad request. Check input.")  # Default error message
+                entry_field.config(state="readonly", foreground="red")
+        else:
+            entry_field.config(state="normal")
+            entry_field.delete(0, tk.END)  # Clear the entry field
+            entry_field.insert(0, f"Unexpected error: {response.status_code}")  # Display unexpected error
+            entry_field.config(state="readonly", foreground="orange")
+    except requests.exceptions.RequestException as e:
+        entry_field.config(state="normal")
+        entry_field.delete(0, tk.END)  # Clear the entry field
+        entry_field.insert(0, f"Error updating Blynk pin: {e}")  # Display exception message
+        entry_field.config(state="readonly", foreground="orange")

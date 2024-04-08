@@ -7,7 +7,6 @@ import tkintermapview as tkmap
 from tkinter import ttk
 from import_data import *
 from select_item import *
-from check_connection import *
 from center_mapview import *
 from map_marker import *
 from create_point import *
@@ -271,7 +270,7 @@ delete_button_arp.grid(row=0, column=1, pady=5, padx=5)
 """
 Commands for ARP Status tab
 """
-frame_arp_control = tk.LabelFrame(frame_points, text="Status and control", padx=5, pady=5)
+frame_arp_control = tk.LabelFrame(frame_points, text="Status and control", padx=27, pady=5)
 frame_arp_control.pack()
 
 # Create labelframe for ARP control widgets
@@ -381,28 +380,29 @@ frame_movement = tk.LabelFrame(frame_arp_control, text="Movement")
 frame_movement.grid(row=2, column=0, pady=5, padx=5, sticky="w")
 
 # Add button for calculate heading and rotate
-button_rotate = tk.Button(frame_movement, text="Rotate ARP", height=2, width=20, bg="forestgreen", fg="white")
+button_rotate = tk.Button(frame_movement, text="Rotate ARP", height=2, width=20, bg="forestgreen", fg="white",
+                          command=lambda: update_angle(69, entry_rotation_status))
 button_rotate.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for reset rotation
-button_reset = tk.Button(frame_movement, text="Reset rotation", height=2, width=15)
+button_reset = tk.Button(frame_movement, text="Reset rotation", height=2)
 button_reset.grid(row=0, column=1, pady=5, padx=5)
 button_reset.config(state="disabled")
 
 # Add button for reset rotation
-button_lock = tk.Button(frame_movement, text="Lock ARP", height=2, width=10)
+button_lock = tk.Button(frame_movement, text="Lock ARP", height=2)
 button_lock.grid(row=0, column=2, pady=5, padx=5)
 button_lock.config(state="disabled")
 
 frame_movement_entry = tk.Frame(frame_movement)
-frame_movement_entry.grid(row=1, column=0, columnspan=3, pady=5, padx=5)
+frame_movement_entry.grid(row=1, column=0, columnspan=3, pady=5, padx=5, sticky="w")
 
 # Create label for ARP Status entry widgets
 label_entry_rotation_status = tk.Label(frame_movement_entry, text="Status:")
 label_entry_rotation_status.grid(row=0, column=0, sticky="e")
 
 # Create entry widget for ARP Status
-entry_rotation_status = tk.Entry(frame_movement_entry, width=50)
+entry_rotation_status = tk.Entry(frame_movement_entry, width=45)
 entry_rotation_status.grid(row=0, column=1, sticky="w")
 
 
