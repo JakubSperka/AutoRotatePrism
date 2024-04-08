@@ -381,13 +381,13 @@ frame_movement.grid(row=2, column=0, pady=5, padx=5, sticky="w")
 
 # Add button for calculate heading and rotate
 button_rotate = tk.Button(frame_movement, text="Rotate ARP", height=2, width=20, bg="forestgreen", fg="white",
-                          command=lambda: update_angle(69, entry_rotation_status))
+                          command=lambda: update_angle(entry_rotation_status))
 button_rotate.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for reset rotation
-button_reset = tk.Button(frame_movement, text="Reset rotation", height=2)
+button_reset = tk.Button(frame_movement, text="Reset rotation", height=2,
+                         command=lambda: reset_angle(entry_rotation_status))
 button_reset.grid(row=0, column=1, pady=5, padx=5)
-button_reset.config(state="disabled")
 
 # Add button for reset rotation
 button_lock = tk.Button(frame_movement, text="Lock ARP", height=2)
