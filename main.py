@@ -390,9 +390,9 @@ button_reset = tk.Button(frame_movement, text="Reset rotation", height=2,
 button_reset.grid(row=0, column=1, pady=5, padx=5)
 
 # Add button for reset rotation
-button_lock = tk.Button(frame_movement, text="Lock ARP", height=2)
+button_lock = tk.Button(frame_movement, text="Lock ARP", height=2, command=lambda: lock_stepper(entry_rotation_status))
 button_lock.grid(row=0, column=2, pady=5, padx=5)
-button_lock.config(state="disabled")
+
 
 frame_movement_entry = tk.Frame(frame_movement)
 frame_movement_entry.grid(row=1, column=0, columnspan=3, pady=5, padx=5, sticky="w")

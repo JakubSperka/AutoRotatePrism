@@ -272,3 +272,65 @@ def reset_angle(entry_field):
         entry_field.delete(0, tk.END)  # Clear the entry field
         entry_field.insert(0, f"Error updating Blynk pin: {e}")  # Display exception message
         entry_field.config(state="readonly", foreground="orange")
+
+
+def lock_stepper(entry_field):
+    """
+    Retrieve a value from a Blynk datastream API, modify it, and update the value back,
+    while providing feedback in a Tkinter entry field.
+
+    Parameters:
+    - token (str): Blynk project token.
+    - pin (str): Pin to retrieve and update value.
+    - entry_field (tk.Entry): Tkinter Entry widget to display feedback message.
+
+    """
+    # Construct the URL to retrieve the value from Blynk
+
+    token = selected_arp_token
+    pin = "v5"
+
+    get_url = f"https://blynk.cloud/external/api/get?token={token}&{pin}"
+    print(get_url)
+
+    try:
+        # Retrieve the current value from the Blynk API
+        response = requests.get(get_url)
+        response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+
+        # Parse the response
+        current_value = response.json()  # Assuming API response is a JSON array with single value
+        print(current_value)
+
+        # Modify the value (if current_value is 0, make it 1; otherwise, make it 0)
+        new_value = 1 if current_value == 0 else 0
+        print(new_value)
+
+        # Construct the URL to update the value on Blynk
+        update_url = f"https://blynk.cloud/external/api/update?token={token}&{pin}={new_value}"
+        print(update_url)
+
+        # Update the value on Blynk
+        response = requests.get(update_url)
+        response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
+
+        # Update entry field with success message
+        entry_field.config(state="normal")
+        entry_field.delete(0, tk.END)  # Clear existing content
+        entry_field.insert(0, "ARP stepper (un)locked successfully (Code: 200)")
+        entry_field.config(state="readonly", foreground="green")
+
+    except requests.exceptions.RequestException as e:
+        # Handle request exceptions (e.g., network errors)
+        entry_field.config(state="normal")
+        entry_field.delete(0, tk.END)  # Clear existing content
+        entry_field.insert(0, f"Error (un)locking: {str(e)} (Code: 400)")
+        entry_field.config(state="readonly", foreground="red")
+
+    except (KeyError, IndexError) as e:
+        # Handle parsing errors or unexpected API response
+        entry_field.config(state="normal")
+        entry_field.delete(0, tk.END)  # Clear existing content
+        entry_field.insert(0, f"Error parsing response: {str(e)} (Code: 400)")
+        entry_field.config(state="readonly", foreground="orange")
+
