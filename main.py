@@ -27,7 +27,7 @@ frame_map_view = tk.LabelFrame(root, text="Map view", padx=10, pady=10)
 frame_map_view.grid(row=0, column=0, rowspan=2, sticky="n")
 
 map_server = tk.StringVar(value="https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg")
-map_view = tkmap.TkinterMapView(frame_map_view, width=570, height=520, corner_radius=0)
+map_view = tkmap.TkinterMapView(frame_map_view, width=570, height=551, corner_radius=0)
 map_view.set_position(48.7284587, 19.1416669)
 map_view.set_zoom(13)
 map_view.set_tile_server(map_server.get(), max_zoom=19)
@@ -68,19 +68,19 @@ label_create_point_id = tk.Label(frame_create_point, text="Point ID:")
 label_create_point_id.grid(row=0, column=0, sticky="e")
 
 entry_create_point_id = tk.Entry(frame_create_point, width=30)
-entry_create_point_id.grid(row=0, column=1, sticky="w")
+entry_create_point_id.grid(row=0, column=1, sticky="w", padx=5)
 
 label_create_point_coord = tk.Label(frame_create_point, text="Coordinates:")
 label_create_point_coord.grid(row=1, column=0, sticky="e")
 
 entry_create_point_coord = tk.Entry(frame_create_point, width=30)
-entry_create_point_coord.grid(row=1, column=1, sticky="w")
+entry_create_point_coord.grid(row=1, column=1, sticky="w", padx=5)
 
 label_create_point_code = tk.Label(frame_create_point, text="Survey code:")
 label_create_point_code.grid(row=2, column=0, sticky="e")
 
 entry_create_point_code = tk.Entry(frame_create_point, width=30)
-entry_create_point_code.grid(row=2, column=1, sticky="w")
+entry_create_point_code.grid(row=2, column=1, sticky="w", padx=5)
 
 # Add button for importing network points
 create_point_button = tk.Button(frame_create_point, text="Create temporary point",
@@ -284,7 +284,7 @@ label_entry_arp_id = tk.Label(frame_arp_status, text="ARP ID:")
 label_entry_arp_id.grid(row=0, column=0, sticky="e")
 
 # Create entry widget for ARP ID
-entry_arp_id = tk.Entry(frame_arp_status, width=15)
+entry_arp_id = tk.Entry(frame_arp_status, width=40)
 entry_arp_id.grid(row=0, column=1, sticky="w")
 
 # Create label for ARP auth token entry widgets
@@ -292,7 +292,7 @@ label_entry_arp_auth_token = tk.Label(frame_arp_status, text="Auth. Token:")
 label_entry_arp_auth_token.grid(row=1, column=0, sticky="e")
 
 # Create entry widget for ARP auth token
-entry_arp_auth_token = tk.Entry(frame_arp_status, width=37)
+entry_arp_auth_token = tk.Entry(frame_arp_status, width=40)
 entry_arp_auth_token.grid(row=1, column=1, sticky="w")
 
 # Create label for ARP Status entry widgets
@@ -300,7 +300,7 @@ label_entry_arp_status = tk.Label(frame_arp_status, text="Status:")
 label_entry_arp_status.grid(row=2, column=0, sticky="e")
 
 # Create entry widget for ARP Status
-entry_arp_status = tk.Entry(frame_arp_status, width=37)
+entry_arp_status = tk.Entry(frame_arp_status, width=40)
 entry_arp_status.grid(row=2, column=1, sticky="w")
 
 """
@@ -393,6 +393,17 @@ button_reset.config(state="disabled")
 button_lock = tk.Button(frame_movement, text="Lock ARP", height=2, width=10)
 button_lock.grid(row=0, column=2, pady=5, padx=5)
 button_lock.config(state="disabled")
+
+frame_movement_entry = tk.Frame(frame_movement)
+frame_movement_entry.grid(row=1, column=0, columnspan=3, pady=5, padx=5)
+
+# Create label for ARP Status entry widgets
+label_entry_rotation_status = tk.Label(frame_movement_entry, text="Status:")
+label_entry_rotation_status.grid(row=0, column=0, sticky="e")
+
+# Create entry widget for ARP Status
+entry_rotation_status = tk.Entry(frame_movement_entry, width=50)
+entry_rotation_status.grid(row=0, column=1, sticky="w")
 
 
 # Initialize mainloop for the root window
