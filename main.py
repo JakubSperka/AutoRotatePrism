@@ -14,7 +14,7 @@ from create_point import *
 
 # Set root GUI window
 root = tk.Tk()
-root.title("ARP Control Panel v.1.0.0 \"Alpha Striker\"")
+root.title("ARP Control Panel v.1.0.1 \"Alpha Striker\"")
 root.iconbitmap("compass.ico")
 root.resizable(False, False)
 
@@ -380,22 +380,23 @@ frame_movement = tk.LabelFrame(frame_arp_control, text="Movement")
 frame_movement.grid(row=2, column=0, pady=5, padx=5, sticky="w")
 
 # Add button for calculate heading and rotate
-button_rotate = tk.Button(frame_movement, text="Rotate ARP", height=2, width=20, bg="forestgreen", fg="white",
+button_rotate = tk.Button(frame_movement, text="Rotate ARP", height=2, width=30, bg="forestgreen", fg="white",
                           command=lambda: update_angle(entry_rotation_status))
 button_rotate.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for reset rotation
-button_reset = tk.Button(frame_movement, text="Reset rotation", height=2,
+button_reset = tk.Button(frame_movement, text="Reset rotation", height=2, bg="darkorange", fg="white",
                          command=lambda: reset_angle(entry_rotation_status))
 button_reset.grid(row=0, column=1, pady=5, padx=5)
 
 # Add button for reset rotation
-button_lock = tk.Button(frame_movement, text="Lock ARP", height=2, command=lambda: lock_stepper(entry_rotation_status))
-button_lock.grid(row=0, column=2, pady=5, padx=5)
+# button_lock = tk.Button(frame_movement, text="Lock ARP", height=2,
+#                         command=lambda: lock_stepper(entry_rotation_status))
+# button_lock.grid(row=0, column=2, pady=5, padx=5)
 
 
 frame_movement_entry = tk.Frame(frame_movement)
-frame_movement_entry.grid(row=1, column=0, columnspan=3, pady=5, padx=5, sticky="w")
+frame_movement_entry.grid(row=1, column=0, columnspan=2, pady=5, padx=5, sticky="w")
 
 # Create label for ARP Status entry widgets
 label_entry_rotation_status = tk.Label(frame_movement_entry, text="Status:")
