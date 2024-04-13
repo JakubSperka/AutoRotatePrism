@@ -103,4 +103,8 @@ void rotateStepper(float angle)
     int stepsToMove = map(angle, 0, 360, 0, stepsPerRevolution);
     stepper.step(stepsToMove);
     lastAngle = angle;  // Update the last known angle
+    digitalWrite(STEPPER_PIN_1,LOW);
+    digitalWrite(STEPPER_PIN_2,LOW);
+    digitalWrite(STEPPER_PIN_3,LOW);
+    digitalWrite(STEPPER_PIN_4,LOW);  
 }
