@@ -1,30 +1,31 @@
 import requests
 import tkinter as tk
 
+"""
+     Check the connection status of an ARP device using an API request.
+
+     Parameters:
+     - token (str): The ARP token used for authentication in the API request.
+     - entry_field (tk.Entry): The Tkinter Entry widget where the connection status
+                               will be displayed and updated.
+
+     This function sends an API request to check the connection status of an ARP device
+     using the provided token. It updates the specified Tkinter Entry widget (`entry_field`)
+     based on the response received:
+     - If the device is connected (response is True), it displays "Online" in green text.
+     - If the device is not connected (response is False), it displays "Offline" in red text.
+     - If there's an error during the API request, it displays an appropriate error message
+       in the Entry widget (`entry_field`) and prints the error to the console.
+
+     The `entry_field` should be a Tkinter Entry widget configured to show read-only text,
+     which will be updated by this function based on the ARP device's connection status.
+
+     Example usage:
+     check_connection("your_arp_token_here", status_entry)
+"""
+
 
 def check_connection(token, entry_field):
-    """
-       Check the connection status of an ARP device using an API request.
-
-       Parameters:
-       - token (str): The ARP token used for authentication in the API request.
-       - entry_field (tk.Entry): The Tkinter Entry widget where the connection status
-                                 will be displayed and updated.
-
-       This function sends an API request to check the connection status of an ARP device
-       using the provided token. It updates the specified Tkinter Entry widget (`entry_field`)
-       based on the response received:
-       - If the device is connected (response is True), it displays "Online" in green text.
-       - If the device is not connected (response is False), it displays "Offline" in red text.
-       - If there's an error during the API request, it displays an appropriate error message
-         in the Entry widget (`entry_field`) and prints the error to the console.
-
-       The `entry_field` should be a Tkinter Entry widget configured to show read-only text,
-       which will be updated by this function based on the ARP device's connection status.
-
-       Example usage:
-       check_connection("your_arp_token_here", status_entry)
-       """
 
     # Construct the URL with the provided token
     url = f"https://blynk.cloud/external/api/isHardwareConnected?token={token}"

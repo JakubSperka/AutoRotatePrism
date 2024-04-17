@@ -1,9 +1,7 @@
 import pandas as pd
 from transform_coord import *
 
-
-def create_point(id_entry, coord_entry, code_entry, tree_name):
-    """
+"""
     Create a point and insert its data into a Treeview widget.
 
     Parameters:
@@ -11,7 +9,11 @@ def create_point(id_entry, coord_entry, code_entry, tree_name):
     - coord_entry (tk.Entry): Entry widget containing the coordinate (format: "latitude longitude").
     - code_entry (tk.Entry): Entry widget containing the survey code.
     - tree_name (tk.Treeview): Treeview widget where the point data will be displayed.
-    """
+"""
+
+
+def create_point(id_entry, coord_entry, code_entry, tree_name):
+
     # Retrieve values from Entry widgets
     point_id = id_entry.get()      # Get the point ID from the ID Entry widget
     coord_input = coord_entry.get()    # Get the coordinate input from the Coordinate Entry widget
