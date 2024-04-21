@@ -1,6 +1,9 @@
 import requests
 import tkinter as tk
 
+temp = float("NaN")
+humid = float("NaN")
+
 """
      Check the connection status of an ARP device using an API request.
 
@@ -25,7 +28,7 @@ import tkinter as tk
 """
 
 
-def check_connection(token, entry_field):
+def check_connection(token, entry_field, temp_field, humid_field):
 
     # Construct the URL with the provided token
     url = f"https://blynk.cloud/external/api/isHardwareConnected?token={token}"
@@ -49,6 +52,30 @@ def check_connection(token, entry_field):
             entry_field.config(state="readonly", foreground="green" if response.json() is True
                                else "red")
 
+            if response.json() is True:
+                check_environment(token)
+
+                temp_field.config(state="normal")
+                temp_field.delete(0, tk.END)
+                temp_field.insert(0, f"{temp}°C")
+                temp_field.config(state="readonly", foreground="blue")
+
+                humid_field.config(state="normal")
+                humid_field.delete(0, tk.END)
+                humid_field.insert(0, f"{humid}%")
+                humid_field.config(state="readonly", foreground="blue")
+
+            else:
+                temp_field.config(state="normal")
+                temp_field.delete(0, tk.END)
+                temp_field.insert(0, f"Sensor offline")
+                temp_field.config(state="readonly", foreground="red")
+
+                humid_field.config(state="normal")
+                humid_field.delete(0, tk.END)
+                humid_field.insert(0, f"Sensor offline")
+                humid_field.config(state="readonly", foreground="red")
+
         # Handle unsuccessful response (display error message)
         else:
             entry_field.config(state="normal")
@@ -64,3 +91,37 @@ def check_connection(token, entry_field):
         entry_field.insert(0, "Error")
         print(f"An error occurred: {e}")
         entry_field.config(state="readonly", foreground="orange")
+
+
+def check_environment(token):
+    pin_temp = "v1"
+    pin_humid = "v2"
+
+    url = f"https://blynk.cloud/external/api/get?token={token}&{pin_temp}&{pin_humid}"
+
+    try:
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            data = response.json()
+
+            if pin_temp in data:
+                global temp
+                temp = data[pin_temp]
+                print(f"Temperature: {temp}")
+                # Process each temperature value if needed
+
+            if pin_humid in data:
+                global humid
+                humid = data[pin_humid]
+                print(f"Humidity: {humid}")
+                # Process each humidity value if needed
+
+        elif response.status_code == 400:
+            print("Bad Request: Check your request parameters.")
+
+        else:
+            print(f"HTTP Error {response.status_code}: {response.text}")
+
+    except requests.exceptions.RequestException as e:
+        print(f"Request failed: {e}")
