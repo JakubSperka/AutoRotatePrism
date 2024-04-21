@@ -10,6 +10,7 @@ from select_item import *
 from center_mapview import *
 from map_marker import *
 from create_point import *
+from map_click_events import *
 
 
 # Set root GUI window
@@ -31,6 +32,12 @@ map_view.set_position(48.7284587, 19.1416669)
 map_view.set_zoom(13)
 map_view.set_tile_server(map_server.get(), max_zoom=19)
 map_view.grid(row=0, column=0, columnspan=2, padx=5, pady=5)
+
+map_view.add_right_click_menu_command(label="Get coordinates",
+                                      command=lambda coords: pick_temp_point_event(coords, entry_create_point_coord),
+                                      pass_coords=True)
+
+map_view.add_left_click_map_command(lambda coords: pick_temp_point_event(coords, entry_create_point_coord))
 
 frame_map_view_buttons = tk.LabelFrame(frame_map_view, text="Center map view", padx=2, pady=2)
 frame_map_view_buttons.grid(row=1, column=0, pady=5, padx=5, sticky="w")
@@ -395,7 +402,7 @@ selection_network.pack(anchor="w")
 selection_temp = tk.Radiobutton(frame_selection, text="Temporary points", variable=var_tree, value="temp_tree")
 selection_temp.pack(anchor="w")
 
-frame_movement = tk.LabelFrame(frame_arp_control, text="Movement")
+frame_movement = tk.LabelFrame(frame_arp_control, text="ARP Movement")
 frame_movement.grid(row=2, column=0, pady=5, padx=5, sticky="nw")
 
 # Add button for calculate heading and rotate
