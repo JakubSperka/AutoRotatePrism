@@ -1,0 +1,1 @@
+pyinstaller main.py --onefile --name ARP_Control_Panel --noconsole --icon compass.ico
