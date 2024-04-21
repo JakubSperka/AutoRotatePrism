@@ -15,7 +15,7 @@ from map_click_events import *
 
 # Set root GUI window
 root = tk.Tk()
-root.title("ARP Control Panel v.1.0.2 \"Alpha Striker\"")
+root.title("ARP Control Panel v.1.0.3 \"Celestial Vanguard\"")
 root.iconbitmap("compass.ico")
 root.resizable(False, False)
 
@@ -27,7 +27,7 @@ frame_map_view = tk.LabelFrame(root, text="Map view", padx=10, pady=10)
 frame_map_view.grid(row=0, column=0, rowspan=2, sticky="n")
 
 map_server = tk.StringVar(value="https://ortofoto.tiles.freemap.sk/{z}/{x}/{y}.jpg")
-map_view = tkmap.TkinterMapView(frame_map_view, width=570, height=551, corner_radius=0)
+map_view = tkmap.TkinterMapView(frame_map_view, width=570, height=595, corner_radius=0)
 map_view.set_position(48.7284587, 19.1416669)
 map_view.set_zoom(13)
 map_view.set_tile_server(map_server.get(), max_zoom=19)
@@ -50,7 +50,7 @@ zoom_to_temp_point = tk.Button(frame_map_view_buttons, text="Center to temporary
                                command=lambda: center_mapview(temp_tree, map_view))
 zoom_to_temp_point.grid(row=0, column=1, pady=5, padx=5)
 
-frame_marker_buttons = tk.LabelFrame(frame_map_view, text="Map markers", padx=2, pady=2)
+frame_marker_buttons = tk.LabelFrame(frame_map_view, text="Map markers & ARP config", padx=2, pady=2)
 frame_marker_buttons.grid(row=2, column=0, pady=5, padx=5, sticky="w")
 
 show_marker_network = tk.Button(frame_marker_buttons, text="Show Network points",
@@ -66,6 +66,18 @@ show_marker_temp.grid(row=0, column=1, pady=5, padx=5)
 hide_marker = tk.Button(frame_marker_buttons, text="Hide markers",
                         command=lambda: hide_markers(), bg="darkgray")
 hide_marker.grid(row=0, column=2, pady=5, padx=5)
+
+show_marker_network = tk.Button(frame_marker_buttons, text="Show Orientation",
+                                command=lambda: place_orientation(map_view), width=16)
+show_marker_network.grid(row=1, column=0, pady=5, padx=5, sticky="w")
+
+show_marker_temp = tk.Button(frame_marker_buttons, text="Show Target",
+                             command=lambda: place_rotation(map_view), width=18)
+show_marker_temp.grid(row=1, column=1, pady=5, padx=5, sticky="w")
+
+hide_marker = tk.Button(frame_marker_buttons, text="Hide config",
+                        bg="darkgray", command=lambda: hide_paths(), width=10)
+hide_marker.grid(row=1, column=2, pady=5, padx=5, sticky="w")
 
 frame_create_point = tk.LabelFrame(frame_map_view, text="Create temporary point", padx=2, pady=2)
 frame_create_point.grid(row=3, column=0, pady=5, padx=5, sticky="w")
@@ -277,7 +289,7 @@ delete_button_arp.grid(row=0, column=1, pady=5, padx=5)
 """
 Commands for ARP Status tab
 """
-frame_arp_control = tk.LabelFrame(frame_points, text="Status and control", padx=27, pady=5)
+frame_arp_control = tk.LabelFrame(frame_points, text="Status and control", padx=30, pady=5)
 frame_arp_control.pack()
 
 # Create labelframe for ARP control widgets
@@ -329,7 +341,7 @@ entry_arp_env_humid = tk.Entry(frame_environment, width=15)
 entry_arp_env_humid.grid(row=1, column=1, sticky="w")
 
 # Add button for selecting values in ARP parameters Treeview
-select_button_arp = tk.Button(frame_arp_status, text="Select ARP", width=34, bg="darkorange", fg="white",
+select_button_arp = tk.Button(frame_arp_status, text="Select ARP", width=42,
                               command=lambda: select_arp(equipment_tree, entry_arp_id, entry_arp_auth_token,
                                                          entry_arp_status, entry_arp_env_temp, entry_arp_env_humid))
 select_button_arp.grid(row=4, column=0, columnspan=2, pady=5, padx=5)
@@ -372,17 +384,17 @@ frame_arp_buttons = tk.Frame(frame_arp_status)
 frame_arp_buttons.grid(row=5, column=0, columnspan=5)
 
 # Add button for selecting Base point in Network points Treeview
-select_button_base = tk.Button(frame_arp_buttons, text="Select Base point",
+select_button_base = tk.Button(frame_arp_buttons, text="Select Base point", width=20,
                                command=lambda: select_base(network_tree if var_tree.get() == "network_tree"
                                                            else temp_tree, entry_arp_base))
-select_button_base.grid(row=0, column=1, pady=1, padx=5)
+select_button_base.grid(row=0, column=1, pady=1, padx=4)
 
 # Add button for selecting orientation point in Network points Treeview
-select_button_orientation = tk.Button(frame_arp_buttons, text="Select Orientation point",
+select_button_orientation = tk.Button(frame_arp_buttons, text="Select Orientation point", width=19,
                                       command=lambda: select_orientation(network_tree if
                                                                          var_tree.get() == "network_tree"
                                                                          else temp_tree, entry_arp_orientation))
-select_button_orientation.grid(row=0, column=2, pady=1, padx=5)
+select_button_orientation.grid(row=0, column=2, pady=1, padx=4)
 
 frame_rotation = tk.LabelFrame(frame_arp_rotation, text="Target selection")
 frame_rotation.grid(row=3, column=0, columnspan=2, pady=5, padx=5, sticky="w")
@@ -411,7 +423,7 @@ button_rotate = tk.Button(frame_movement, text="Rotate ARP", height=2, width=30,
 button_rotate.grid(row=0, column=0, pady=5, padx=5)
 
 # Add button for reset rotation
-button_reset = tk.Button(frame_movement, text="Reset rotation", height=2, bg="darkturquoise", fg="white",
+button_reset = tk.Button(frame_movement, text="Reset rotation", height=2, bg="darkorange", fg="white",
                          command=lambda: reset_angle(entry_rotation_status))
 button_reset.grid(row=0, column=1, pady=5, padx=5)
 

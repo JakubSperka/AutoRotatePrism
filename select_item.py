@@ -2,6 +2,9 @@
 from check_arp import *  # Assuming this module exists and is correctly imported
 import tkinter as tk  # Assuming tkinter is used for GUI
 from calculate_angle import *
+from transform_coord import *
+
+added_paths = []
 
 # Define global variables as dataframes to store selected data
 selected_point = pd.DataFrame()
@@ -272,3 +275,70 @@ def reset_angle(entry_field):
         entry_field.delete(0, tk.END)  # Clear the entry field
         entry_field.insert(0, f"Error updating Blynk pin: {e}")  # Display exception message
         entry_field.config(state="readonly", foreground="orange")
+
+
+def place_orientation(map_view):
+    # Check if selected_base and selected_orientation are not empty
+    if selected_base.empty or selected_orientation.empty:
+        print("Error: No base or orientation selected.")
+        return  # Exit function if either is empty
+
+    # Extract base coordinates and transform to 4326
+    base_x_5514 = selected_base["X"].iloc[0]
+    base_y_5514 = selected_base["Y"].iloc[0]
+    base_4326 = transform_5514(base_y_5514, base_x_5514)
+    base = (base_4326[1], base_4326[0])
+
+    # Extract orientation coordinates and transform to 4326
+    orientation_x_5514 = selected_orientation["X"].iloc[0]
+    orientation_y_5514 = selected_orientation["Y"].iloc[0]
+    orientation_4326 = transform_5514(orientation_y_5514, orientation_x_5514)
+    orientation = (orientation_4326[1], orientation_4326[0])
+
+    # Print coordinates for debugging or verification
+    print("Base:", base)
+    print("Orientation:", orientation)
+
+    # Set path on map view with the base and orientation coordinates
+    path_orientation = map_view.set_path([base, orientation], color="red", width=3, name="ARP orientation")
+    added_paths.append(path_orientation)
+
+
+def place_rotation(map_view):
+    # Check if selected_base and selected_orientation are not empty
+    if selected_base.empty or selected_orientation.empty:
+        print("Error: No base or rotation selected.")
+        return  # Exit function if either is empty
+
+    # Extract base coordinates and transform to 4326
+    base_x_5514 = selected_base["X"].iloc[0]
+    base_y_5514 = selected_base["Y"].iloc[0]
+    base_4326 = transform_5514(base_y_5514, base_x_5514)
+    base = (base_4326[1], base_4326[0])
+
+    # Extract orientation coordinates and transform to 4326
+    rotation_x_5514 = selected_rotation["X"].iloc[0]
+    rotation_y_5514 = selected_rotation["Y"].iloc[0]
+    rotation_4326 = transform_5514(rotation_y_5514, rotation_x_5514)
+    rotation = (rotation_4326[1], rotation_4326[0])
+
+    # Print coordinates for debugging or verification
+    print("Base:", base)
+    print("Rotation:", rotation)
+
+    # Set path on map view with the base and orientation coordinates
+    path_rotation = map_view.set_path([base, rotation], color="lime", width=3, name="ARP target")
+    added_paths.append(path_rotation)
+
+
+def hide_paths():
+    """
+    Function to hide all previously added markers from the map_view.
+
+    This function iterates through the list of added_markers and removes each marker
+    from the map_view, effectively clearing the map of displayed markers.
+    """
+    global added_paths
+    for marker in added_paths:
+        marker.delete()  # Remove each marker from the map
+    added_markers = []  # Clear the list of added markers
