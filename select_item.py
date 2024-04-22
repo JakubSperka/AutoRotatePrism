@@ -311,6 +311,7 @@ def place_rotation(map_view):
         return  # Exit function if either is empty
 
     # Extract base coordinates and transform to 4326
+
     base_x_5514 = selected_base["X"].iloc[0]
     base_y_5514 = selected_base["Y"].iloc[0]
     base_4326 = transform_5514(base_y_5514, base_x_5514)
@@ -339,6 +340,6 @@ def hide_paths():
     from the map_view, effectively clearing the map of displayed markers.
     """
     global added_paths
-    for marker in added_paths:
-        marker.delete()  # Remove each marker from the map
-    added_markers = []  # Clear the list of added markers
+    for path in added_paths:
+        path.delete()  # Remove each marker from the map
+    added_paths = []  # Clear the list of added markers
