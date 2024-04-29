@@ -7,7 +7,7 @@
 #include <Arduino.h>
 #include <TinyGsmClient.h>
 #include <BlynkSimpleTinyGSM.h>
-#include <Stepper.h>
+#include <AccelStepper.h>
 #include <DHT.h>
 
 #define STEPPER_PIN_1 13
@@ -18,7 +18,7 @@
 #define DHTTYPE DHT11
 
 const int stepsPerRevolution = 2048;
-Stepper stepper(stepsPerRevolution, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
+AccelStepper stepper(AccelStepper::FULL4WIRE, STEPPER_PIN_1, STEPPER_PIN_2, STEPPER_PIN_3, STEPPER_PIN_4);
 
 BlynkTimer timer;
 TinyGsm modem(SerialAT);
@@ -88,7 +88,9 @@ void setup()
 
     Blynk.begin(BLYNK_AUTH_TOKEN, modem, apn, user, pass);
 
-    stepper.setSpeed(6);
+    // AccelStepper setup
+    stepper.setMaxSpeed(100);       // Set maximum speed in steps per second
+    stepper.setAcceleration(50);    // Set acceleration in steps per second per second
 
     dht.begin();
     timer.setInterval(10000L, sendSensorData);  // Send sensor data every 10 seconds
@@ -100,16 +102,24 @@ void loop()
 {
     Blynk.run();
     timer.run();
+
+    // Update the AccelStepper library
+    stepper.runSpeedToPosition();
 }
 
 void rotateStepper(float angle)
 {
     int stepsToMove = map(angle, 0, 360, 0, stepsPerRevolution);
-    stepper.step(stepsToMove);
-    lastAngle = angle;
 
-    digitalWrite(STEPPER_PIN_1, LOW);
-    digitalWrite(STEPPER_PIN_2, LOW);
-    digitalWrite(STEPPER_PIN_3, LOW);
-    digitalWrite(STEPPER_PIN_4, LOW);
+    // Move the stepper to the desired position
+    stepper.moveTo(stepsToMove);
+
+    // Run the stepper until it reaches the target position
+    while (stepper.distanceToGo() != 0)
+    {
+        stepper.run();
+        delay(1);  // Small delay to let AccelStepper handle motor movement
+    }
+
+    lastAngle = angle;
 }
