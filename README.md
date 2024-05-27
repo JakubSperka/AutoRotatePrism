@@ -50,7 +50,7 @@ This repository provides a user-friendly control panel for managing ARP devices 
 
 **Author:** Jakub Šperka
 
-**Version:** 1.0.3
+**Version:** 1.0.4
 
-**Release:** Celestial Vanguard
+**Release:** Celestial Dawn
 
