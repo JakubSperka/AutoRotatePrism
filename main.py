@@ -15,7 +15,7 @@ from map_click_events import *
 
 # Set root GUI window
 root = tk.Tk()
-root.title("ARP Control Panel v.1.0.3 \"Celestial Vanguard\"")
+root.title("ARP Control Panel v.1.0.4 \"Celestial Dawn\"")
 root.iconbitmap("compass.ico")
 root.resizable(False, False)
 
