@@ -47,3 +47,25 @@ def transform_5514(x, y):
     point_4326 = transformer.transform(x, y)
 
     return point_4326
+
+
+def transform(from_epsg, to_epsg, from_x, from_y):
+    """
+    Transforms coordinates from one Coordinate Reference System (CRS) to another.
+
+    Parameters:
+    - from_epsg (int): EPSG code of the source CRS.
+    - to_epsg (int): EPSG code of the target CRS.
+    - from_x (float): X coordinate in the source CRS.
+    - from_y (float): Y coordinate in the source CRS.
+
+    Returns:
+    - tuple: Transformed coordinates (X, Y) in the target CRS.
+    """
+    # Create a transformer from the source CRS to the target CRS
+    transformer = pyproj.Transformer.from_crs(from_epsg, to_epsg, always_xy=True)
+
+    # Transform the coordinates
+    point_target_crs = transformer.transform(from_x, from_y)
+
+    return point_target_crs
